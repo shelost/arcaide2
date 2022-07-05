@@ -1,3 +1,3 @@
 # Arcaide 2
 
-![cube](assets/cube.png)
+![cube](assets/arcaide.png)
