@@ -9,8 +9,9 @@ let RIGHT = 0
 let q = "1fad071e";
 let r = "150deff5";
 let big = "045e512c"
+let v = '1b2d62fb'
 
-load(menu[INDEX])
+load(v)
 setTimeout(() => {
   window.requestAnimationFrame(loop);
 }, 100);
@@ -377,7 +378,7 @@ const loop = () => {
   for (let i = 0; i < Class('color').length; i++){
     let div = Class('color')[i]
     let id = JSON.parse(div.classList[1].substring(1))
-    if (id == 9) {
+    if (id == 10) {
       id = null
     }
 

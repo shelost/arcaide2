@@ -293,6 +293,8 @@ function colorCell(n) {
       return "#ff841a"
     case 8:
       return "#7fdbff"
+    case 9:
+      return "#7c1c28"
     default:
       return "black"
   }
@@ -399,9 +401,10 @@ function drawHTML() {
               <div class = 'color c6'></div>
               <div class = 'color c7'></div>
               <div class = 'color c8'></div>
+              <div class = 'color c9'></div>
               <div class = 'color c0'></div>
-              <div class = 'color c9'>
-                <img src = 'assets/null.png' alt = 'null' class = 'null'>
+              <div class = 'color c10'>
+              <img src = 'assets/null.png' alt = 'null' class = 'null'>
               </div>
             </div>
           </div>
