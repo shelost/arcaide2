@@ -9,6 +9,8 @@ const log = Id("log")
 const splash = Id('splash')
 const download = Id('download')
 const area = Id('area')
+const id = Id('id')
+const pane = Id('menu')
 
 // mouse variables
 let M = {
@@ -112,7 +114,7 @@ function loadJson(str) {
       }
       OBJECT.problems = json.train.concat(json.test)
       OBJECT.id = str
-      Id("id").innerHTML = str
+      id.value = str
       for (let i = 0; i < OBJECT.problems.length; i++) {
 
         OBJECT.inputs.push([copyGrid(OBJECT.problems[i].input)])
@@ -223,6 +225,8 @@ function setParams() {
     }
   }
 
+
+
   let i_id = STATE.active_layers[0]
   if (i_id < 10) {
     i_id = '0' + i_id
@@ -270,7 +274,9 @@ function setParams() {
 function colorCell(n) {
   switch (n) {
     case null:
-      return "white"
+      return "rgba(0, 0, 0, 0)"
+    case 0:
+      return 'black'
     case 1:
       return "#0074d9"
     case 2:
@@ -635,8 +641,8 @@ function drawProblem(grid, ctx, alpha = 1) {
 
   ctx.globalAlpha = alpha
   ctx.clearRect(0, 0, S, S)
-  ctx.strokeStyle = "#d0d0d0"
-  ctx.lineWidth = 1
+  ctx.strokeStyle = "#909090"
+  ctx.lineWidth = 0.3
 
 
   for (let i = 0; i < grid.length; i++) {
@@ -896,8 +902,10 @@ function drawItem(grid, coords, ctx) {
     let j = coords[k][1];
     let i2 = i - b.ymin;
     let j2 = j - b.xmin;
-    if (grid[i][j]) {
+
+    if (grid[i][j] || grid[i][j] == 0) {
       ctx.fillStyle = colorCell(grid[i][j]);
+      console.log(grid[i][j], ctx.fillStyle)
       ctx.strokeStyle = "#d0d0d0";
       ctx.fillRect(xm + c * j2, ym + c * i2, c, c);
       ctx.strokeRect(xm + c * j2, ym + c * i2, c, c);

@@ -34,7 +34,6 @@ setInterval(() => {
 }, 10);
 
 
-
 function resizeArea() {
   let rect = area.getBoundingClientRect()
   let full_width = window.innerWidth - 180
@@ -43,6 +42,60 @@ function resizeArea() {
   RIGHT = window.innerWidth - 10 - og_pos
   SCALE = full_width / og_width
   area.style.transform = `scale(${SCALE}) translateX(${RIGHT}px)`
+}
+
+
+//______________________________________  MENU  ______________________________________\\
+
+function drawResults(query) {
+  pane.innerHTML = ''
+  let sorted = []
+  let scores = []
+  let s = ''
+
+  // determine scores
+  for (let i = 0; i < menu.length; i++) {
+    let name = menu[i];
+
+    let score = 0
+    for (let j = 0; j < query.length; j++){
+      let substr = query.substring(0, j)
+      if (name.includes(substr)) {
+        score ++
+      }
+    }
+    scores.push(score)
+  }
+
+  // insert into sorted list
+  for (let i = 0; i < menu.length; i++) {
+    let name = menu[i];
+    let score = scores[i]
+    let k = sorted.length - 1
+    while (k > 0 && score > scores[k-1]) {
+      k--
+    }
+    sorted.splice(k,0,name)
+  }
+
+  // draw panel
+  for (let i = 0; i < sorted.length; i++) {
+    let name = sorted[i];
+    s = `<p class = 'result' id = '${name}'> ${name} </p>` + s;
+  }
+
+  pane.innerHTML = s
+  pane.scrollTo(0, pane.scrollHeight)
+}
+
+drawResults('')
+
+id.onclick = () => {
+  activate(pane)
+}
+
+id.oninput = () => {
+  drawResults(id.value)
 }
 
 //______________________________________  MOUSE  ______________________________________\\
@@ -74,6 +127,10 @@ window.addEventListener("touchmove", (e) => {
 window.addEventListener("mouseup", (e) => {
   STATE.clicked = [];
   STATE.mousedown = false;
+  if (pane.classList.contains('active')) {
+    id.value = OBJECT.id
+    deactivate(pane)
+  }
 });
 
 window.addEventListener("touchend", (e) => {
@@ -87,6 +144,8 @@ window.addEventListener('keyup', e => {
       STATE.linking = false
       STATE.coloring = false
       document.body.style.cursor = 'default'
+      id.value = OBJECT.id
+      deactivate(pane)
       break
     case 'l':
       STATE.linking = true
@@ -149,7 +208,8 @@ const loop = () => {
 
   // log
 
-  log.innerHTML = `
+  log.innerHTML =
+   `
     STATE <br><br>
 
     a-prob   = <span> ${STATE.active_prob} </span> <br>
@@ -170,11 +230,19 @@ const loop = () => {
 
     coloring = <span> ${STATE.coloring} </span> <br>
     color= <span> ${STATE.color} </span> <br>
-
     `;
 
 
   //_______________________________  SELECT  _______________________________\\
+
+  // menu
+  for (let i = 0; i < Class('result').length; i++){
+    let div = Class('result')[i]
+
+    div.onclick = () => {
+      load(div.id)
+    }
+  }
 
 
   // splash screen

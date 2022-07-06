@@ -3,6 +3,9 @@ body {
   background: #ccf5e7;
   background: #f6fbff;
   background: #f5f2ff;
+  background: black;
+  background: #1d0f54;
+  color: white;
 }
 
 input {
@@ -50,6 +53,14 @@ button {
 
 ::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.5);
+}
+
+canvas {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+canvas.active {
+  border: 1px solid #00f7ff;
 }
 
 .flex {
@@ -109,30 +120,30 @@ button {
     padding: 0.2vw;
     padding-left: 0.5vw;
     padding-right: 0.5vw;
-    background: #0074ff;
     color: white;
     border-radius: 0.3vw;
     -webkit-transition: 0.2s ease;
     transition: 0.2s ease;
     font-size: 12px;
+    background: rgba(0, 116, 255, 0.5);
   }
   button:hover {
-    background: #0015ff;
+    background: rgba(0, 116, 255, 0.7);
   }
   button.del {
-    background: #ff0000;
+    background: rgba(255, 0, 0, 0.5);
   }
   button.del:hover {
-    background: #d31111;
+    background: rgba(255, 0, 0, 0.7);
   }
   button.ac {
-    background: white;
-    color: red;
-    border: 1px solid red;
-    font-weight: 600;
+    background: rgba(255, 255, 255, 0);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    font-weight: 300;
   }
   button.ac:hover {
-    background: #ffdcdc;
+    background: rgba(255, 255, 255, 0.2);
   }
   #splash {
     background: white;
@@ -243,11 +254,10 @@ button {
     -webkit-box-pack: justify;
         -ms-flex-pack: justify;
             justify-content: space-between;
+    color: white;
   }
   #navbar #mast {
     background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: white;
     width: 140px;
     height: 40px;
     margin: 10px;
@@ -269,7 +279,7 @@ button {
   }
   #navbar #mast h1 {
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 900;
     margin: 0;
     letter-spacing: 0.5px;
   }
@@ -280,16 +290,20 @@ button {
     font-size: 14px;
     width: 140px;
     height: 35px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 206, 0, 0.3);
+    background: black;
     border-radius: 10px;
     text-align: center;
     line-height: 33px;
     margin: 10px;
     margin-bottom: 15px;
-    font-weight: 400;
+    font-weight: 300;
     letter-spacing: 1px;
     color: #ffce00;
+    -webkit-transition: 0.2s ease;
+    transition: 0.2s ease;
+  }
+  #navbar #id:hover {
+    font-weight: 600;
   }
   #navbar #log {
     font-size: 11px;
@@ -302,11 +316,39 @@ button {
     font-weight: 300;
     letter-spacing: 1px;
     margin: 0;
-    color: white;
   }
   #navbar #log span {
     font-weight: 900;
-    color: white;
+  }
+  #navbar #menu {
+    position: absolute;
+    background: black;
+    -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px);
+    bottom: 45px;
+    left: 13px;
+    width: 140px;
+    border-radius: 10px 10px 0 0;
+    overflow-y: scroll;
+    -webkit-transition: 0.2s ease;
+    transition: 0.2s ease;
+    height: 0px;
+  }
+  #navbar #menu p {
+    text-align: center;
+    font-size: 13px;
+    letter-spacing: 1px;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 20px;
+  }
+  #navbar #menu p:hover {
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.2);
+  }
+  #navbar #menu.active {
+    padding-bottom: 10px;
+    height: calc(300px);
   }
   #main {
     position: fixed;
@@ -391,25 +433,25 @@ button {
         -ms-flex-pack: center;
             justify-content: center;
     margin: 0.5vw;
-    margin-top: 5vw;
+    margin-top: 8vw;
   }
   .links .link-btn {
     margin-top: 1vw;
-    background: #d3f0ff;
-    color: #004cff;
+    background: rgba(0, 116, 255, 0.2);
+    color: #00b7ff;
   }
   .links .link-btn span {
     font-size: 16px;
   }
   .links .link-btn:hover {
-    background: #95dcff;
+    background: rgba(0, 116, 255, 0.4);
   }
   .links .link-btn.del {
-    background: #ffe6e6;
+    background: rgba(255, 0, 0, 0.2);
     color: red;
   }
   .links .link-btn.del:hover {
-    background: #ffc4c4;
+    background: rgba(255, 0, 0, 0.4);
   }
   #row {
     display: -webkit-box;
@@ -439,15 +481,14 @@ button {
   #row .prob .canv {
     width: 4vw;
     height: 4vw;
-    background: white;
     margin: 0.2vw;
     border-radius: 0.5vw;
   }
   #row .prob.active {
-    background: rgba(255, 0, 0, 0.3);
+    background: rgba(0, 247, 255, 0.1);
   }
   #row .prob.active .canv {
-    border: 2px solid red;
+    border: 1px solid #00f7ff;
   }
   #ink {
     width: 20px;
@@ -469,6 +510,9 @@ button {
   .layer {
     display: none;
     border-radius: 1vw;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.02);
+    padding: 0.5vw;
   }
   .layer.active {
     display: -webkit-box;
@@ -476,13 +520,14 @@ button {
     display: flex;
   }
   .layer .title {
+    text-align: center;
     font-size: 13px;
-    font-weight: 400;
-    background: rgba(0, 0, 0, 0.05);
+    font-weight: 300;
+    background: rgba(0, 0, 0, 0.2);
     padding: 0.5vw;
     border-radius: 0.5vw;
-    margin-bottom: 1.5vw;
     margin-top: 0.2vw;
+    letter-spacing: 0.5px;
   }
   .layer .box {
     display: -webkit-box;
@@ -492,8 +537,10 @@ button {
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
-    margin-left: 1vw;
-    margin-right: 1vw;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    margin: 0.5vw;
   }
   .layer .box .panorama {
     display: -webkit-box;
@@ -515,7 +562,6 @@ button {
   .layer .box .panorama .flex canvas {
     width: 18vw;
     height: 18vw;
-    background: white;
     margin: 0.5vw;
     border-radius: 0.5vw;
   }
@@ -524,11 +570,24 @@ button {
     height: 1.5vw;
     font-size: 1.2vw;
     line-height: 1vw;
-    color: black;
     border-radius: 1vw;
     background: rgba(0, 0, 0, 0.05);
-    font-weight: 900;
+    font-weight: 300;
     color: rgba(0, 0, 0, 0.6);
+  }
+  .layer .box .exp .exp-btn.plu {
+    color: #00b3ff;
+    background: rgba(0, 116, 255, 0.1);
+  }
+  .layer .box .exp .exp-btn.plu:hover {
+    background: rgba(0, 116, 255, 0.3);
+  }
+  .layer .box .exp .exp-btn.min {
+    color: #ff4946;
+    background: rgba(255, 0, 0, 0.15);
+  }
+  .layer .box .exp .exp-btn.min:hover {
+    background: rgba(255, 0, 0, 0.3);
   }
   .layer .box .exp .exp-btn:hover {
     background: rgba(0, 0, 0, 0.15);
@@ -575,7 +634,9 @@ button {
     margin-right: 0.5vw;
   }
   .layer .toolbar {
-    margin-top: 2vw;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0.5vw;
+    border-radius: 0.5vw;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -596,13 +657,14 @@ button {
             align-items: center;
   }
   .layer .toolbar .colors .color {
-    width: 1.5vw;
-    height: 1.5vw;
+    width: 1.3vw;
+    height: 1.3vw;
+    margin: 0.2vw;
     border-radius: 1vw;
     -webkit-transition: 0.1s ease;
     transition: 0.1s ease;
     cursor: pointer;
-    border: 1px solid white;
+    border: 1px solid rgba(255, 255, 255, 0.4);
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -654,8 +716,8 @@ button {
     height: 28vw;
     overflow-y: scroll;
     overflow-x: hidden;
-    background: white;
-    margin: 0.1vw;
+    background: rgba(0, 0, 0, 0.2);
+    margin: 0.5vw;
     padding: 0.5vw;
     position: relative;
     border: 1px solid rgba(0, 0, 0, 0.3);
@@ -703,15 +765,12 @@ button {
         flex-wrap: wrap;
   }
   .layer .items .group .shelf .item {
-    background: white;
     width: 4.5vw;
     height: 4.5vw;
     border-radius: 0.4vw;
     margin: 0.2vw;
+    background: rgba(255, 255, 255, 0.1);
     cursor: pointer;
-  }
-  .layer .items .group .shelf .item.active {
-    border: 2px solid red;
   }
   .layer .items .group .shelf .item.pending {
     -webkit-animation: 0.4s pending alternate infinite;
@@ -724,23 +783,27 @@ button {
     border-radius: 0.4vw;
     margin: 0.8vw;
     text-align: center;
-    background: #caeeff;
+    background: rgba(0, 116, 255, 0.2);
     font-size: 30px;
-    color: #0074ff;
+    font-weight: 200;
+    color: #00b7ff;
     cursor: pointer;
     -webkit-transition: 0.1s ease;
     transition: 0.1s ease;
   }
   .layer .items .group .shelf .group_add:hover {
-    background: #aae4ff;
+    background: rgba(0, 116, 255, 0.3);
   }
-  .layer .items input {
+  .layer .items .label {
+    background: none;
     margin: 0.2vw;
     text-align: center;
     font-size: 12px;
     width: 8vw;
     border-radius: 0.4vw;
     padding: 0.2vw;
+    color: white;
+    letter-spacing: 0.5px;
   }
   .layer .buttons {
     width: 100%;
@@ -752,6 +815,7 @@ button {
             justify-content: center;
     padding-top: 0.3vw;
     padding-bottom: 0.3vw;
+    margin-bottom: 0.5vw;
   }
   .layer .buttons button {
     margin: 0.2vw;
@@ -764,7 +828,7 @@ button {
     border-radius: 0.5vw;
   }
   .previews {
-    margin-bottom: 1vw;
+    margin-bottom: 2vw;
   }
   .preview {
     width: 6vw;
@@ -773,10 +837,10 @@ button {
     margin-left: 1vw;
     margin-right: 1vw;
     border-radius: 0.5vw;
-    border: 2px solid #02c55d;
+    border: 1px solid #00ff77;
   }
   .preview.incorrect {
-    border: 2px solid red;
+    border: 1px solid #ff4040;
   }
   .thumbnails {
     display: -webkit-box;
@@ -792,17 +856,14 @@ button {
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
+    margin: 1vw;
   }
   .thumbnails canvas {
     width: 4vw;
     height: 4vw;
-    border: 1px solid #a0a0a0;
     border-radius: 0.5vw;
     margin: 0.3vw;
     cursor: pointer;
-  }
-  .thumbnails canvas.active {
-    border: 2px solid red;
   }
   .thumbnails .buttons {
     margin-top: 0.5vw;
@@ -848,6 +909,119 @@ button {
     -webkit-transform: scale(1.05);
             transform: scale(1.05);
   }
+}
+
+.light {
+  background: #eeeaff;
+}
+
+.light button {
+  background: #0074ff;
+}
+
+.light button:hover {
+  background: #0015ff;
+}
+
+.light button.del {
+  background: #ff0000;
+}
+
+.light button.del:hover {
+  background: #d31111;
+}
+
+.light #navbar {
+  background: none;
+  color: black;
+}
+
+.light #navbar #mast {
+  color: black;
+  background: white;
+}
+
+.light #navbar #id {
+  color: black;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.light canvas {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.light canvas.active {
+  border: 2px solid red;
+}
+
+.light #row .prob.active {
+  background: rgba(255, 0, 0, 0.3);
+}
+
+.light #row .prob.active .canv {
+  border: 2px solid red;
+}
+
+.light .links #link {
+  color: #0074ff;
+}
+
+.light .ac {
+  color: red;
+  border: 1px solid red;
+  font-weight: 700;
+  background: white;
+}
+
+.light .ac:hover {
+  background: rgba(255, 0, 0, 0.1);
+}
+
+.light .layer .box .title {
+  color: black;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.light .layer .box .exp {
+  color: black;
+}
+
+.light .layer .box .exp .exp-btn {
+  font-weight: 700;
+}
+
+.light .layer .box .exp .exp-btn.plu {
+  color: #0074ff;
+}
+
+.light .layer .box .exp .exp-btn.min {
+  color: red;
+}
+
+.light .layer .items {
+  background-color: white;
+}
+
+.light .layer .items .group {
+  background: #e6ebf1;
+}
+
+.light .layer .items .group .shelf .group_add {
+  background: #b7d8ff;
+  color: #0074ff;
+}
+
+.light .layer .items .group .shelf .group_add:hover {
+  background: #a0cbff;
+}
+
+.light .layer .items .group .label {
+  color: black;
+}
+
+.light .exp-btn {
+  color: black;
 }
 
 #loading {

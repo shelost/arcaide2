@@ -3,7 +3,10 @@ body {
     background: #ccf5e7;
     background: #f6fbff;
     background: #f5f2ff;
+    background: black;
+    background: #1d0f54;
     //background: white;
+    color: white;
 }
 
 input {
@@ -52,6 +55,10 @@ button {
 canvas{
     //background: white;
     //transition: 0.1s ease;
+    background: rgba(white, 0.05);
+    &.active{
+        border: 1px solid #00f7ff;
+    }
 }
 
 .flex{
@@ -98,27 +105,28 @@ canvas{
         padding: 0.2vw;
         padding-left: 0.5vw;
         padding-right: 0.5vw;
-        background: #0074ff;
         color: white;
         border-radius: 0.3vw;
         transition: 0.2s ease;
         font-size: 12px;
+        background: rgba(#0074ff, 0.5);
         &:hover{
-            background: #0015ff;
+            background: rgba(#0074ff, 0.7);
+
         }
         &.del{
-            background: #ff0000;
+            background: rgba(red, 0.5);
             &:hover{
-                background: #d31111;
+                background: rgba(red, 0.7);
             }
         }
         &.ac{
-            background: white;
-            color: red;
-            border: 1px solid red;
-            font-weight: 600;
+            background: rgba(white, 0);
+            color: white;
+            border: 1px solid rgba(white, 0.5);
+            font-weight: 300;
             &:hover{
-                background: #ffdcdc;
+                background: rgba(white, 0.2);
             }
         }
     }
@@ -204,17 +212,17 @@ canvas{
         height: calc(100vh - 30px);
         background: #ccf5e7;
         background: #1d0f54;
+        //background: rgba(white, 0.7);
         //border: 1px solid black;
         border-radius: 15px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: space-between;
+        color: white;
 
         #mast{
             background: rgba(white, 0.1);
-            border: 1px solid rgba(white, 0.2);
-            color: white;
             width: 140px;
             height: 40px;
             margin: 10px;
@@ -229,9 +237,10 @@ canvas{
             }
             h1{
                 font-size: 16px;
-                font-weight: 700;
+                font-weight: 900;
                 margin: 0;
                 letter-spacing: 0.5px;
+                //color: black;
                 span{
                     font-weight: 100;
                 }
@@ -242,16 +251,19 @@ canvas{
             font-size: 14px;
             width: 140px;
             height: 35px;
-            background: rgba(white, 0.1);
-            border: 1px solid rgba(#ffce00, 0.3);
+            background: rgba(black, 1);
             border-radius: 10px;
             text-align: center;
             line-height: 33px;
             margin: 10px;
             margin-bottom: 15px;
-            font-weight: 400;
+            font-weight: 300;
             letter-spacing: 1px;
             color: #ffce00;
+            transition: 0.2s ease;
+            &:hover{
+                font-weight: 600;
+            }
         }
 
         #log{
@@ -263,11 +275,37 @@ canvas{
             font-weight: 300;
             letter-spacing: 1px;
             margin: 0;
-            color: white;
-            //background: rgba(black, 0.05);
             span{
                 font-weight: 900;
-                color: white;
+            }
+        }
+
+        #menu{
+            position: absolute;
+            background: rgba(black, 1);
+            backdrop-filter: blur(5px);
+            bottom: 45px;
+            left: 13px;
+            width: 140px;
+            border-radius: 10px 10px 0 0;
+            overflow-y: scroll;
+            transition: 0.2s ease;
+            height: 0px;
+            p{
+                text-align: center;
+                font-size: 13px;
+                letter-spacing: 1px;
+                padding: 5px;
+                margin: 5px;
+                border-radius: 20px;
+                &:hover{
+                    cursor: pointer;
+                    background: rgba(white, 0.2);
+                }
+            }
+            &.active{
+                padding-bottom: 10px;
+                height: calc(300px);
             }
         }
     }
@@ -318,22 +356,22 @@ canvas{
         align-items: center;
         justify-content: center;
         margin: 0.5vw;
-        margin-top: 5vw;
+        margin-top: 8vw;
         .link-btn{
             margin-top: 1vw;
-            background: #d3f0ff;
-            color: #004cff;
+            background: rgba(#0074ff, 0.2);
+            color: #00b7ff;
             span{
                 font-size: 16px;
             }
             &:hover{
-                background: #95dcff;
+                background: rgba(#0074ff, 0.4);
             }
             &.del{
-                background: #ffe6e6;
+                background: rgba(red, 0.2);
                 color: red;
                 &:hover{
-                    background: #ffc4c4;
+                    background: rgba(red, 0.4);
                 }
             }
         }
@@ -357,16 +395,13 @@ canvas{
             .canv{
                 width: 4vw;
                 height: 4vw;
-                background: white;
                 margin: 0.2vw;
                 border-radius: 0.5vw;
-                //border: 1px solid rgba(black, 0.3);
             }
             &.active{
-               // border: 1px solid red;
-                background: rgba(red, 0.3);
+                background: rgba(#00f7ff, 0.1);
                 .canv{
-                    border: 2px solid red;
+                    border: 1px solid #00f7ff;
                 }
             }
         }
@@ -393,24 +428,28 @@ canvas{
         display: none;
         //padding: 0.5vw;
         border-radius: 1vw;
+        border: 1px solid rgba(white, 0.2);
+        background: rgba(white, 0.02);
+        padding: 0.5vw;
 
         &.active{
             display: flex;
         }
         .title{
+            text-align: center;
             font-size: 13px;
-            font-weight: 400;
-            background: rgba(black, 0.05);
+            font-weight: 300;
+            background: rgba(black, 0.2);
             padding: 0.5vw;
             border-radius: 0.5vw;
-            margin-bottom: 1.5vw;
             margin-top: 0.2vw;
+            letter-spacing: 0.5px;
         }
         .box{
             display: flex;
             flex-direction: column;
-            margin-left: 1vw;
-            margin-right: 1vw;
+            justify-content: space-between;
+            margin: 0.5vw;
             .panorama{
                 display: flex;
                 flex-direction: column;
@@ -420,7 +459,6 @@ canvas{
                     canvas {
                         width: 18vw;
                         height: 18vw;
-                        background: white;
                         margin: 0.5vw;
                         border-radius: 0.5vw;
                     }
@@ -432,11 +470,25 @@ canvas{
                     height: 1.5vw;
                     font-size: 1.2vw;
                     line-height: 1vw;
-                    color: black;
                     border-radius: 1vw;
                     background: rgba(black, 0.05);
-                    font-weight: 900;
+                    font-weight: 300;
                     color: rgba(black, 0.6);
+
+                    &.plu{
+                        color: #00b3ff;
+                        background: rgba(#0074ff, 0.1);
+                        &:hover{
+                            background: rgba(#0074ff, 0.3);
+                        }
+                    }
+                    &.min{
+                        color: #ff4946;
+                        background: rgba(red, 0.15);
+                        &:hover{
+                            background: rgba(red, 0.3);
+                        }
+                    }
                     &:hover{
                         background: rgba(black, 0.15);
                     }
@@ -448,6 +500,7 @@ canvas{
                     text-align: center;
                     border-radius: 0.5vw;
                 }
+
                 &.v{
                     display: flex;
                     flex-direction: column;
@@ -470,9 +523,9 @@ canvas{
             }
         }
         .toolbar{
-            //background: rgba(black, 0.05);
-            //padding: 0.5vw;
-            margin-top: 2vw;
+            background: rgba(black, 0.2);
+            padding: 0.5vw;
+            border-radius: 0.5vw;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -481,12 +534,13 @@ canvas{
                 display: flex;
                 align-items: center;
                 .color{
-                    width: 1.5vw;
-                    height: 1.5vw;
+                    width: 1.3vw;
+                    height: 1.3vw;
+                    margin: 0.2vw;
                     border-radius: 1vw;
                     transition: 0.1s ease;
                     cursor: pointer;
-                    border: 1px solid white;
+                    border: 1px solid rgba(white, 0.4);
                     display: flex;
                     justify-content: flex-start;
                     align-items: flex-start;
@@ -495,7 +549,6 @@ canvas{
                     }
                     &.active{
                         border: 2px solid white;
-
                     }
                 }
                 img{
@@ -518,13 +571,15 @@ canvas{
                 transform: scale(1.05);
             }
         }
+        .bar{
+        }
         .items{
             width: 11.7vw;
             height: 28vw;
             overflow-y: scroll;
             overflow-x: hidden;
-            background: white;
-            margin: 0.1vw;
+            background: rgba(black, 0.2);
+            margin: 0.5vw;
             padding: 0.5vw;
             position: relative;
             border: 1px solid rgba(black, 0.3);
@@ -550,15 +605,12 @@ canvas{
                     align-items: center;
                     flex-wrap: wrap;
                     .item{
-                        background: white;
                         width: 4.5vw;
                         height: 4.5vw;
                         border-radius: 0.4vw;
                         margin: 0.2vw;
+                        background: rgba(white, 0.1);
                         cursor: pointer;
-                        &.active{
-                            border: 2px solid red;
-                        }
                         &.pending{
                             animation: 0.4s pending alternate infinite;
                         }
@@ -570,24 +622,28 @@ canvas{
                         border-radius: 0.4vw;
                         margin: 0.8vw;
                         text-align: center;
-                        background: rgb(202, 238, 255);
+                        background: rgba(#0074ff, 0.2);
                         font-size: 30px;
-                        color: #0074ff;
+                        font-weight: 200;
+                        color: #00b7ff;
                         cursor: pointer;
                         transition: 0.1s ease;
                         &:hover{
-                            background: rgb(170, 228, 255);
+                            background: rgba(#0074ff, 0.3);
                         }
                     }
                 }
             }
-            input{
+            .label{
+                background: none;
                 margin: 0.2vw;
                 text-align: center;
                 font-size: 12px;
                 width: 8vw;
                 border-radius: 0.4vw;
                 padding: 0.2vw;
+                color: white;
+                letter-spacing: 0.5px;
             }
         }
         .buttons {
@@ -596,6 +652,7 @@ canvas{
             justify-content: center;
             padding-top: 0.3vw;
             padding-bottom: 0.3vw;
+            margin-bottom: 0.5vw;
 
             button {
                 margin: 0.2vw;
@@ -612,7 +669,8 @@ canvas{
     }
 
     .previews{
-        margin-bottom: 1vw;
+        margin-bottom: 2vw;
+        //border-bottom: 1px solid white;
     }
 
     .preview{
@@ -622,9 +680,9 @@ canvas{
         margin-left: 1vw;
         margin-right: 1vw;
         border-radius: 0.5vw;
-        border: 2px solid #02c55d;
+        border: 1px solid #00ff77;
         &.incorrect{
-            border: 2px solid red;
+            border: 1px solid #ff4040;
         }
     }
 
@@ -633,17 +691,14 @@ canvas{
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        margin: 1vw;
 
         canvas{
             width: 4vw;
             height: 4vw;
-            border: 1px solid #a0a0a0;
             border-radius: 0.5vw;
             margin: 0.3vw;
             cursor: pointer;
-            &.active{
-                border: 2px solid red;
-            }
         }
         .buttons{
             margin-top: 0.5vw;
@@ -689,6 +744,118 @@ canvas{
 
 
 
+
+.light{
+    background: #eeeaff;
+
+    button{
+        background: #0074ff;
+        &:hover{
+            background: #0015ff;
+        }
+        &.del{
+            background: #ff0000;
+            &:hover{
+                background: #d31111;
+            }
+        }
+    }
+    #navbar{
+        background: none;
+        color: black;
+        #mast{
+            color: black;
+            background: white;
+        }
+        #id{
+            color: black;
+            font-weight: 600;
+            background: rgba(white, 0.5);
+        }
+    }
+    canvas{
+        background: rgba(white, 0.4);
+        &.active{
+            border: 2px solid red;
+        }
+    }
+    #row{
+        .prob{
+            &.active{
+                background: rgba(red, 0.3);
+                .canv{
+                    border: 2px solid red;
+                }
+            }
+        }
+    }
+    .links{
+        .link-btn{
+
+        }
+        #link{
+            color: #0074ff;
+        }
+    }
+    .ac{
+        color: red;
+        border: 1px solid red;
+        font-weight: 700;
+        background: white;
+        &:hover{
+            background: rgba(red, 0.1);
+        }
+    }
+    .layer{
+        .box{
+            .title{
+                color: black;
+                background: rgba(black, 0.08);
+            }
+            .exp{
+                .exp-btn{
+                    //color: black;
+                    font-weight: 700;
+                    &.plu{
+                        //background: rgba(#0074ff, 0.2);
+                        color: #0074ff;
+                    }
+                    &.min{
+                        color: red;
+                    }
+                }
+                color: black;
+            }
+        }
+        .items{
+            background-color: white;
+            .group{
+                background: #e6ebf1;
+                .shelf{
+                    .group_add{
+                        background: #b7d8ff;
+                        color: #0074ff;
+                        &:hover{
+                            background: #a0cbff;
+                        }
+                    }
+                }
+                .label{
+                    color: black;
+                }
+            }
+            .item{
+            }
+        }
+    }
+
+    .exp-btn{
+        &.plu{
+
+        }
+        color: black;
+    }
+}
 
 
 
