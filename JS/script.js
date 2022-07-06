@@ -1,7 +1,7 @@
 
 //______________________________________  SETUP  ______________________________________\\
 
-let INDEX = 50
+let INDEX = 60
 let TIME = 0
 let SCALE = 1
 let RIGHT = 0
@@ -11,7 +11,7 @@ let r = "150deff5";
 let big = "045e512c"
 let v = '1b2d62fb'
 
-load(v)
+load(menu[INDEX])
 setTimeout(() => {
   window.requestAnimationFrame(loop);
 }, 100);
@@ -76,13 +76,14 @@ function drawResults(query) {
     while (k > 0 && score > scores[k-1]) {
       k--
     }
-    sorted.splice(k,0,name)
+    sorted.splice(k,0,[name,i])
   }
 
   // draw panel
   for (let i = 0; i < sorted.length; i++) {
-    let name = sorted[i];
-    s = `<p class = 'result' id = '${name}'> ${name} </p>` + s;
+    let name = sorted[i][0];
+    let index = sorted[i][1]
+    s = `<p class = 'result' id = '${name}-${index}'> <span> ${index}</span> ${name} </p>` + s;
   }
 
   pane.innerHTML = s
@@ -239,9 +240,13 @@ const loop = () => {
   // menu
   for (let i = 0; i < Class('result').length; i++){
     let div = Class('result')[i]
+    let split = div.id.split('-')
+    let id = split[0]
+    let index = JSON.parse(split[1])
 
     div.onclick = () => {
-      load(div.id)
+      load(id)
+      INDEX = index
     }
   }
 

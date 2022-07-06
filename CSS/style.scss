@@ -295,12 +295,21 @@ canvas{
             transition: 0.2s ease;
             height: 0px;
             p{
-                text-align: center;
-                font-size: 13px;
+               // text-align: center;
+                font-size: 12px;
                 letter-spacing: 1px;
                 padding: 5px;
                 margin: 5px;
                 border-radius: 20px;
+                span{
+                    font-size: 11px;
+                    background: rgba(#ffce00, 0.2);
+                    padding: 5px;
+                    margin-right: 10px;
+                    border-radius: 10px;
+                    color: #ffce00;
+                    font-weight: 100;
+                }
                 &:hover{
                     cursor: pointer;
                     background: rgba(white, 0.2);
