@@ -126,6 +126,14 @@ function loadJson(str) {
             group: 1,
             n: 1,
             coords: [],
+            data: {
+              type: "",
+              len: -1,
+              xlen: -1,
+              ylen: -1,
+              xs: -1,
+              ys: -1
+            }
           }]
         )
         ACTIVE.input_items = OBJECT.input_items[0]
@@ -140,6 +148,14 @@ function loadJson(str) {
             group: 1,
             n: 1,
             coords: [],
+            data: {
+              type: "",
+              len: -1,
+              xlen: -1,
+              ylen: -1,
+              xs: -1,
+              ys: -1
+            }
           }]
         )
         ACTIVE.output_items = OBJECT.output_items[0]
@@ -197,7 +213,6 @@ function clearCanvases() {
 function setParams() {
 
   let p = STATE.active_prob - 1
-
   ACTIVE.prob = OBJECT.problems[p]
   ACTIVE.links = OBJECT.links[p]
   ACTIVE.names = OBJECT.names[p]
@@ -224,9 +239,6 @@ function setParams() {
       ACTIVE.item = item
     }
   }
-
-
-
   let i_id = STATE.active_layers[0]
   if (i_id < 10) {
     i_id = '0' + i_id
@@ -259,7 +271,6 @@ function setParams() {
       ACTIVE.output_next = min
     }
   }
-
   let o_id = STATE.active_layers[1]
   if (o_id < 10) {
     o_id = '0' + o_id
@@ -437,22 +448,24 @@ function drawHTML() {
             y = temp.sym + '0' + temp.group
           }
           let name = findDict(ACTIVE.names, y)
-
           if (temp.layer == j) {
-
             items_str +=
               `
               <div id = 'group-${y}' class = 'group'>
                 <div id = 'shelf-${y}' class = 'shelf'>
               `
-
             for (let v = 0; v < items[k].length; v++){
               let item = items[k][v]
-
+             // console.log(item.data.type)
               items_str +=
-                `<canvas id = 'item-${y}-${item.n}' class = 'item' width = '${S}' height = '${S}'> </canvas>`
+                `
+                <div class = 'elem'>
+                  <canvas id = 'item-${y}-${item.n}' class = 'item' width = '${S}' height = '${S}'> </canvas>
+                  <select id="select-${y}-${item.n}" name="select-${y}-${item.n}" class = 'select'>
+                  </select>
+                </div>
+                `
             }
-
             items_str +=
               `
                     <div id = 'group_add_${y}_${j}' class = 'group_add'> + </div>
@@ -463,7 +476,6 @@ function drawHTML() {
           }
         }
       }
-
       items_str +=
         `
         </div>
@@ -492,6 +504,7 @@ function drawHTML() {
         </div>
       `
   }
+  addData()
 }
 
 // highlight the active objects
@@ -637,7 +650,6 @@ function drawProblem(grid, ctx, alpha = 1) {
 
   let width = grid[0].length
   let height = grid.length
-
   let c = (S * 0.9) / Math.max(width, height)
   let xm = (S - c * width) / 2
   let ym = (S - c * height) / 2
@@ -647,7 +659,6 @@ function drawProblem(grid, ctx, alpha = 1) {
   ctx.strokeStyle = "#909090"
   ctx.lineWidth = 0.3
 
-
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[i].length; j++) {
       ctx.fillStyle = colorCell(grid[i][j])
@@ -655,25 +666,6 @@ function drawProblem(grid, ctx, alpha = 1) {
       ctx.strokeRect(xm + c * j, ym + c * i, c, c)
     }
   }
-
-  /*
-  for (let i = 0; i < height; i++) {
-    for (let j = 0; j < width; j++) {
-      let i1 = i - dims[0]
-      let j1 = j - dims[3]
-
-      if (i < dims[0] || i > grid.length-1 + dims[0] ||
-        j < dims[3] || j > grid[0].length-1 + dims[3]) {
-        ctx.fillStyle = colorCell(null)
-      } else {
-        ctx.fillStyle = colorCell(grid[i1][j1])
-      }
-      ctx.fillRect(xm + c * j, ym + c * i, c, c)
-      ctx.strokeRect(xm + c * j, ym + c * i, c, c)
-    }
-  }
-  */
-
   ctx.globalAlpha = 1
 }
 
@@ -687,7 +679,6 @@ function drawBounds(grid, items, ctx) {
   let ym = (S - c * height) / 2
 
   // determine bounds
-
   let data = []
   for (let k = 0; k < items.length; k++) {
 
@@ -862,6 +853,7 @@ function drawItems() {
   }
 }
 
+// draw item
 function drawItem(grid, coords, ctx) {
 
   let b = {
@@ -891,10 +883,8 @@ function drawItem(grid, coords, ctx) {
   }
 
   // draw
-
   let width = b.xmax - b.xmin + 1;
   let height = b.ymax - b.ymin + 1;
-
   let c = (S * 0.9) / Math.max(width, height);
   let xm = (S - c * width) / 2;
   let ym = (S - c * height) / 2;
@@ -908,7 +898,6 @@ function drawItem(grid, coords, ctx) {
 
     if (grid[i][j] || grid[i][j] == 0) {
       ctx.fillStyle = colorCell(grid[i][j]);
-      console.log(grid[i][j], ctx.fillStyle)
       ctx.strokeStyle = "#d0d0d0";
       ctx.fillRect(xm + c * j2, ym + c * i2, c, c);
       ctx.strokeRect(xm + c * j2, ym + c * i2, c, c);
@@ -1084,5 +1073,189 @@ function changeBounds(d) {
       default:
           break
       }
+  }
+}
+
+// add data
+function addData() {
+
+  for (let k = 0; k < 2; k++){
+    let input = k == 0
+    let items = input ? ACTIVE.input_items : ACTIVE.output_items
+    for (let v = 0; v < items.length; v++){
+      let item = items[v]
+      let id = item.sym + item.group + '-' + item.n
+      if (item.group < 10) {
+        id = item.sym + '0' + item.group + '-' + item.n
+      }
+      let select = Id(`select-${id}`)
+      let val = select.value
+
+      // check for shape
+      let check = [
+        ["cheat", true],        // 0
+        ["dot", true],          // 1
+        ["vertical", true],     // 2
+        ["horizontal", true],   // 3
+        ["diagonal_ul", true],  // 4
+        ["diagonal_ur", true],  // 5
+        ["rectangle", true],    // 6
+        ["outline", true],      // 7
+      ]
+      check[1][1] = item.coords.length == 1
+      if (item.coords.length > 0) {
+        let i0 = item.coords[0][0]
+        let j0 = item.coords[0][1]
+        let min_i = i0, max_i = i0, min_j = j0, max_j = j0
+        // check possible shapes
+        for (let t = 0; t < item.coords.length; t++){
+          let i = item.coords[t][0]
+          let j = item.coords[t][1]
+          // check if line
+          if (i != i0) {
+            check[3][1] = false
+          }
+          if (j != j0) {
+            check[2][1] = false
+          }
+          // check if diagonal
+          if (i - i0 != j - j0) {
+            check[4][1] = false
+          }
+          if (i - i0 != j0 - j) {
+            check[5][1] = false
+          }
+          // alter min & max
+          if (i < min_i) {
+            min_i = i
+          } else if (i > max_i) {
+            max_i = i
+          }
+          if (j < min_j) {
+            min_j = j
+          } else if (j > max_j) {
+            max_j = j
+          }
+        }
+        // check if rect
+        for (let i = min_i; i < max_i + 1; i++){
+          if (includesArray(item.coords, [i, min_j]) == null ||
+              includesArray(item.coords, [i, max_j]) == null) {
+              check[7][1] = false
+          }
+          for (let j = min_j; j < max_j + 1; j++){
+            if (includesArray(item.coords, [min_i, j]) == null ||
+                includesArray(item.coords, [max_i, j]) == null) {
+                  check[7][1] = false
+            }
+            if (includesArray(item.coords, [i, j]) == null) {
+              check[6][1] = false
+            }
+          }
+        }
+        if (check[6][1] && (max_i-min_i) > 1 && (max_j-min_j) > 1) {
+          check[7][1] = false
+        }
+        // change object
+        select.innerHTML = ''
+        let str = ''
+        let match = false
+        for (let i = 0; i < check.length; i++){
+          let type = check[i][0]
+          if (check[i][1]) {
+            if (val == type) {
+              str += `<option value="${type}" selected> ${type}</option>`
+              item.data.type = type
+              match = true
+              switch (type) {
+                case 'cheat':
+                  item.data = {
+                    type: "cheat",
+                    len: -1, xlen: -1, ylen: -1,
+                    xs: max_i, ys: min_j,
+                    bitmap: item.coords
+                  }
+                  break
+                case 'dot':
+                  item.data = {
+                    type: "dot",
+                    len: -1, xlen: -1, ylen: -1,
+                    xs: min_i, ys: min_j,
+                    bitmap: []
+                  }
+                  break
+                case 'vertical':
+                  item.data = {
+                    type: "vertical",
+                    len: item.coords.length, xlen: -1, ylen: -1,
+                    xs: max_i, ys: min_j,
+                    bitmap: []
+                  }
+                  break
+                case 'horizontal':
+                  item.data = {
+                    type: "horizontal",
+                    len: item.coords.length, xlen: -1, ylen: -1,
+                    xs: max_i, ys: min_j,
+                    bitmap: []
+                  }
+                  break
+                case 'diagonal_ul':
+                  item.data = {
+                    type: "diagonal_ul",
+                    len: item.coords.length, xlen: -1, ylen: -1,
+                    xs: max_i, ys: max_j,
+                    bitmap: []
+                  }
+                  break
+                case 'diagonal_ur':
+                  item.data = {
+                    type: "diagonal_ur",
+                    len: item.coords.length, xlen: -1, ylen: -1,
+                    xs: max_i, ys: min_j,
+                    bitmap: []
+                  }
+                  break
+                case 'rectangle':
+                  item.data = {
+                    type: "rectangle",
+                    len: -1, xlen: (max_j-min_j+1), ylen: (max_i-min_i+1),
+                    xs: max_i, ys: min_j,
+                    bitmap: []
+                  }
+                  break
+                case 'outline':
+                  item.data = {
+                    type: "outline",
+                    len: -1, xlen: (max_j-min_j+1), ylen: (max_i-min_i+1),
+                    xs: max_i, ys: min_j,
+                    bitmap: []
+                  }
+                  break
+                default:
+                  break
+              }
+            } else if (item.data.type == type){
+              str += `<option value="${type}" selected> ${type}</option>`
+              match = true
+            } else {
+              str += `<option value="${type}"> ${type}</option>`
+            }
+          }
+        }
+        select.innerHTML = str
+        if (!match) {
+          item.data = {
+            type: 'cheat',
+            xs: -1,
+            ys: -1,
+            len: -1,
+            xlen: -1,
+            yen: -1,
+            bitmap: item.coords
+          }
+        }
+      }
+    }
   }
 }

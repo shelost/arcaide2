@@ -15,6 +15,16 @@ input {
     border: none;
 }
 
+select {
+    font-family: Manrope, Roboto, sans-serif;
+    outline: none;
+    border: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+}
+
 ::selection{
     background: black;
     color: white;
@@ -611,11 +621,30 @@ canvas{
                 margin: 0.2vw;
                 margin-bottom: 0.5vw;
                 .shelf{
-                    //border: 1px solid blue;
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     flex-wrap: wrap;
+                    .elem{
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        .select{
+                            width: 4.5vw;
+                            margin-top: 2px;
+                            padding: 2px;
+                            background: none;
+                            color: white;
+                            text-align: center;
+                            font-size: 11px;
+                            transition: 0.2s ease;
+                            border-radius: 10px;
+                            cursor: pointer;
+                            &:hover{
+                                background: rgba(white, 0.1);
+                            }
+                        }
+                    }
                     .item{
                         width: 4.5vw;
                         height: 4.5vw;

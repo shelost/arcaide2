@@ -21,6 +21,7 @@ function load(json) {
   TIME = 300
   setTimeout(() => {
     drawHTML();
+    addData()
     setParams();
     setTimeout(() => {
       drawProblems();
@@ -33,7 +34,6 @@ setInterval(() => {
     TIME -= 10
   }
 }, 10);
-
 
 function resizeArea() {
   let rect = area.getBoundingClientRect()
@@ -250,7 +250,6 @@ const loop = () => {
     }
   }
 
-
   // splash screen
   Id("start").onclick = () => {
     Id("splash").classList.remove("active");
@@ -310,6 +309,9 @@ const loop = () => {
   Id('ink').style.left = M.o.x + 'px'
   Id('ink').style.top = M.o.y + 'px'
 
+
+  //_______________________________ PER LAYER  _______________________________\\
+
   // select layer
   for (let i = 0; i < Class("thumbnail").length; i++) {
     let div = Class("thumbnail")[i];
@@ -319,86 +321,20 @@ const loop = () => {
       layer = layer.substring(1)
     }
     layer = JSON.parse(layer)
-
     let n = sym == "i" ? 0 : 1;
 
     div.onclick = () => {
-
       STATE.active_layers[n] = layer
-
       if (layer < 10) {
         layer = '0' + layer
       }
-
       let group_div = Id(`items-${sym}${layer}`).firstElementChild
       let y = group_div.id.substring(6)
-      let no = group_div.firstElementChild.firstElementChild.id.substring(9)
-
+      let no = group_div.firstElementChild.firstElementChild.firstElementChild.id.substring(9)
       STATE.active_item = y + '-' + no
+      addData()
     };
   }
-
-  // select problem
-  for (let i = 0; i < Class("prob").length; i++) {
-    let div = Class("prob")[i];
-    let n = JSON.parse(div.id.substring(5));
-
-    div.onclick = () => {
-      STATE.active_prob = n;
-      drawHTML()
-      setTimeout(() => {
-        drawItems()
-      }, 50);
-    };
-  }
-
-  // select item
-  for (let i = 0; i < Class('item').length; i++){
-    let div = Class('item')[i]
-    let id = div.id.substring(5)
-
-    div.onclick = () => {
-      if (STATE.linking) {
-        if (STATE.active_item != id) {
-          ACTIVE.links.push([STATE.active_item, id])
-          STATE.linking = false
-        }
-      } else {
-        STATE.active_item = id
-      }
-    }
-  }
-
-  // change name
-  for (let i = 0; i < Class('label').length; i++) {
-    let div = Class('label')[i]
-    let id = div.id.substring(6)
-
-    div.onchange = () => {
-      changeDict(ACTIVE.names, id, div.value)
-    }
-  }
-
-  // select color
-  for (let i = 0; i < Class('color').length; i++){
-    let div = Class('color')[i]
-    let id = JSON.parse(div.classList[1].substring(1))
-    if (id == 10) {
-      id = null
-    }
-
-    div.onclick = () => {
-
-      Id('ink').classList.remove(`c${STATE.color}`)
-      STATE.linking = false
-      STATE.coloring = true
-      STATE.color = id
-      Id('ink').classList.add(`c${STATE.color}`)
-    }
-  }
-
-
-  //_______________________________  BUTTONS  _______________________________\\
 
   // reset layer
   for (let k = 0; k < Class('reset').length; k++){
@@ -416,7 +352,6 @@ const loop = () => {
       let panel = input ? ACTIVE.input_layer : ACTIVE.output_layer
       let dims = input ? ACTIVE.input_dim : ACTIVE.output_dim
       let items = input ? ACTIVE.input_items : ACTIVE.output_items
-
       // reset expansions
       for (let i = 0; i < dims.length; i++){
         while (dims[i] > 0) {
@@ -431,7 +366,6 @@ const loop = () => {
           )
         }
       }
-
       // redraw grid
       if (layer == 1) {
         implantGrid(panel, grid)
@@ -498,99 +432,6 @@ const loop = () => {
     }
   }
 
-  // add layer
-  for (let i = 0; i < Class("add-layer").length; i++) {
-    let div = Class("add-layer")[i];
-    let sym = div.id.substring(10);
-    let input = sym == "i"
-    let prob = OBJECT.problems[STATE.active_prob - 1]
-    let og_grid = input ? prob.input : prob.output
-    let n = input ? 0 : 1;
-    let arr = input ? ACTIVE.input : ACTIVE.output;
-    let grid = input ? ACTIVE.input_layer : ACTIVE.output_layer;
-    let items = input ? ACTIVE.input_items : ACTIVE.output_items;
-    let dims = input ? ACTIVE.input_dims : ACTIVE.output_dims;
-    let next = input ? ACTIVE.input_next : ACTIVE.output_next
-    div.onclick = () => {
-      if (STATE.num_layers[n] < 6) {
-        arr.push(emptyGrid(og_grid))
-        dims.push([0,0,0,0])
-        STATE.num_layers[n] += 1
-        items.push({
-          layer: STATE.num_layers[n],
-          sym: sym,
-          group: next,
-          n: 1,
-          coords: [],
-        });
-        let group = next
-        if (group < 10) {
-          group = '0' + group
-        }
-        let key = sym + group
-        let name = sym + '-' + group
-        ACTIVE.names.push([key,name])
-        STATE.active_layers[n] = STATE.num_layers[n]
-        STATE.active_item = sym + group + '-' + 1
-        drawHTML();
-        drawItems()
-      } else {
-        alert("Maximum of 6 layers")
-      }
-    };
-  }
-
-  // delete layer
-  for (let i = 0; i < Class("del-layer").length; i++) {
-    let div = Class("del-layer")[i];
-    let sym = div.id.substring(10);
-    let input = sym == "i";
-    let n = input ? 0 : 1;
-    let arr = input ? ACTIVE.input : ACTIVE.output;
-    let items = input ? ACTIVE.input_items : ACTIVE.output_items;
-    let dims = input ? ACTIVE.input_dims : ACTIVE.output_dims;
-    div.onclick = () => {
-      if (STATE.num_layers[n] > 1 && STATE.active_layers[n] != 1) {
-        // delete items
-        let to_delete = [];
-        for (let j = 0; j < items.length; j++) {
-          let item = items[j];
-          if (item.layer == STATE.active_layers[n]) {
-            to_delete.push(j);
-          }
-        }
-        for (let j = 0; j < to_delete.length; j++) {
-          items.splice(to_delete[j], 1);
-        }
-        // delete layer
-        arr.splice(STATE.active_layers[n] - 1, 1);
-        dims.splice(STATE.active_layers[n] - 1, 1);
-        STATE.active_layers[n] -= 1
-        STATE.num_layers[n] -= 1;
-        // set new active item
-        let layer = STATE.active_layers[n];
-        for (let j = 0; j < items.length; j++) {
-          let item = items[j];
-          if (item.layer == layer) {
-            let id = item.sym + item.group + '0' + item.n
-            if (item.group < 10) {
-              id = item.sym + '0' + item.group + '-' + item.n
-            }
-            STATE.active_item = id
-          } else if (item.layer >= layer) {
-            item.layer--
-          }
-        }
-        drawHTML();
-        drawItems()
-      } else if (STATE.active_layers[n] == 1) {
-        alert("You can't delete your base layer.");
-      }else{
-        alert("You can't delete your only layer!");
-      }
-    };
-  }
-
   // add item group
   for (let i = 0; i < Class("add-item").length; i++) {
     let div = Class("add-item")[i];
@@ -610,6 +451,15 @@ const loop = () => {
         group: next,
         n: 1,
         coords: [],
+        data: {
+          type: "cheat",
+          len: -1,
+          xlen: -1,
+          ylen: -1,
+          xs: -1,
+          ys: -1,
+          bitmap: []
+        }
       });
       let group = next
       let key = sym + group
@@ -621,12 +471,11 @@ const loop = () => {
         id = sym + '0' + group + '-' + 1
       }
       ACTIVE.names.push([key, name])
-      drawHTML();
+      drawHTML()
       drawItems()
       STATE.active_item = id
     };
   }
-
 
   // delete item / item group
   for (let i = 0; i < Class("del-item").length; i++) {
@@ -686,6 +535,176 @@ const loop = () => {
     };
   }
 
+
+  //_______________________________ PER PROBLEM  _______________________________\\
+
+  // per problem
+  for (let i = 0; i < Class("prob").length; i++) {
+    let div = Class("prob")[i];
+    let n = JSON.parse(div.id.substring(5));
+
+    div.onclick = () => {
+      STATE.active_prob = n;
+      drawHTML()
+      setTimeout(() => {
+        drawItems()
+      }, 50);
+    };
+  }
+
+  // per item
+  for (let i = 0; i < Class('item').length; i++){
+    let item_div = Class('item')[i]
+    let item_id = item_div.id.substring(5)
+    item_div.onclick = () => {
+      if (STATE.linking) {
+        if (STATE.active_item != item_id) {
+          ACTIVE.links.push([STATE.active_item, item_id])
+          STATE.linking = false
+        }
+      } else {
+        STATE.active_item = item_id
+      }
+    }
+
+    let select_div = Class('select')[i]
+    select_div.oninput = () => {
+      addData()
+    }
+  }
+
+  // per group
+  for (let i = 0; i < Class('label').length; i++) {
+    let div = Class('label')[i]
+    let id = div.id.substring(6)
+
+    div.onchange = () => {
+      changeDict(ACTIVE.names, id, div.value)
+    }
+  }
+
+  // per color
+  for (let i = 0; i < Class('color').length; i++){
+    let div = Class('color')[i]
+    let id = JSON.parse(div.classList[1].substring(1))
+    if (id == 10) {
+      id = null
+    }
+    div.onclick = () => {
+      Id('ink').classList.remove(`c${STATE.color}`)
+      STATE.linking = false
+      STATE.coloring = true
+      STATE.color = id
+      Id('ink').classList.add(`c${STATE.color}`)
+    }
+  }
+
+
+  //_______________________________  BUTTONS  _______________________________\\
+
+
+  // add layer
+  for (let i = 0; i < Class("add-layer").length; i++) {
+    let div = Class("add-layer")[i];
+    let sym = div.id.substring(10);
+    let input = sym == "i"
+    let prob = OBJECT.problems[STATE.active_prob - 1]
+    let og_grid = input ? prob.input : prob.output
+    let n = input ? 0 : 1;
+    let arr = input ? ACTIVE.input : ACTIVE.output;
+    let grid = input ? ACTIVE.input_layer : ACTIVE.output_layer;
+    let items = input ? ACTIVE.input_items : ACTIVE.output_items;
+    let dims = input ? ACTIVE.input_dims : ACTIVE.output_dims;
+    let next = input ? ACTIVE.input_next : ACTIVE.output_next
+    div.onclick = () => {
+      if (STATE.num_layers[n] < 6) {
+        arr.push(emptyGrid(og_grid))
+        dims.push([0,0,0,0])
+        STATE.num_layers[n] += 1
+        items.push({
+          layer: STATE.num_layers[n],
+          sym: sym,
+          group: next,
+          n: 1,
+          coords: [],
+          data: {
+            type: "cheat",
+            len: -1,
+            xlen: -1,
+            ylen: -1,
+            xs: -1,
+            ys: -1,
+            bitmap: []
+          }
+        });
+        let group = next
+        if (group < 10) {
+          group = '0' + group
+        }
+        let key = sym + group
+        let name = sym + '-' + group
+        ACTIVE.names.push([key,name])
+        STATE.active_layers[n] = STATE.num_layers[n]
+        STATE.active_item = sym + group + '-' + 1
+        drawHTML()
+        drawItems()
+      } else {
+        alert("Maximum of 6 layers")
+      }
+    };
+  }
+
+  // delete layer
+  for (let i = 0; i < Class("del-layer").length; i++) {
+    let div = Class("del-layer")[i];
+    let sym = div.id.substring(10);
+    let input = sym == "i";
+    let n = input ? 0 : 1;
+    let arr = input ? ACTIVE.input : ACTIVE.output;
+    let items = input ? ACTIVE.input_items : ACTIVE.output_items;
+    let dims = input ? ACTIVE.input_dims : ACTIVE.output_dims;
+    div.onclick = () => {
+      if (STATE.num_layers[n] > 1 && STATE.active_layers[n] != 1) {
+        // delete items
+        let to_delete = [];
+        for (let j = 0; j < items.length; j++) {
+          let item = items[j];
+          if (item.layer == STATE.active_layers[n]) {
+            to_delete.push(j);
+          }
+        }
+        for (let j = 0; j < to_delete.length; j++) {
+          items.splice(to_delete[j], 1);
+        }
+        // delete layer
+        arr.splice(STATE.active_layers[n] - 1, 1);
+        dims.splice(STATE.active_layers[n] - 1, 1);
+        STATE.active_layers[n] -= 1
+        STATE.num_layers[n] -= 1;
+        // set new active item
+        let layer = STATE.active_layers[n];
+        for (let j = 0; j < items.length; j++) {
+          let item = items[j];
+          if (item.layer == layer) {
+            let id = item.sym + item.group + '0' + item.n
+            if (item.group < 10) {
+              id = item.sym + '0' + item.group + '-' + item.n
+            }
+            STATE.active_item = id
+          } else if (item.layer >= layer) {
+            item.layer--
+          }
+        }
+        drawHTML();
+        drawItems()
+      } else if (STATE.active_layers[n] == 1) {
+        alert("You can't delete your base layer.");
+      }else{
+        alert("You can't delete your only layer!");
+      }
+    };
+  }
+
   // add item
   for (let i = 0; i < Class("group_add").length; i++) {
     let div = Class("group_add")[i];
@@ -716,8 +735,17 @@ const loop = () => {
         group: group,
         n: num,
         coords: [],
+        data: {
+          type: "cheat",
+          len: -1,
+          xlen: -1,
+          ylen: -1,
+          xs: -1,
+          ys: -1,
+          bitmap: []
+        }
       });
-      drawHTML();
+      drawHTML()
       drawItems()
       let id = sym + group + '-' + num
       if (group < 10) {
@@ -850,7 +878,6 @@ const loop = () => {
                 } else {
                   ACTIVE.item.coords.splice(index, 1)
                 }
-                drawItems()
               } else if (LINKED != null) {
                   STATE.clicked.push(LINKED.sym + '-' + i + '@' + j)
                   let index = includesArray(LINKED.coords, [i, j])
@@ -859,9 +886,10 @@ const loop = () => {
                   } else {
                     LINKED.coords.splice(index, 1)
                   }
-                drawItems()
               }
             }
+            drawItems()
+            addData()
           }
         }
       }

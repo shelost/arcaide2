@@ -14,6 +14,16 @@ input {
   border: none;
 }
 
+select {
+  font-family: Manrope, Roboto, sans-serif;
+  outline: none;
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
+}
+
 ::-moz-selection {
   background: black;
   color: white;
@@ -775,6 +785,34 @@ canvas.active {
             align-items: center;
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
+  }
+  .layer .items .group .shelf .elem {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .layer .items .group .shelf .elem .select {
+    width: 4.5vw;
+    margin-top: 2px;
+    padding: 2px;
+    background: none;
+    color: white;
+    text-align: center;
+    font-size: 11px;
+    -webkit-transition: 0.2s ease;
+    transition: 0.2s ease;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .layer .items .group .shelf .elem .select:hover {
+    background: rgba(255, 255, 255, 0.1);
   }
   .layer .items .group .shelf .item {
     width: 4.5vw;
