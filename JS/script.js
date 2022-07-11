@@ -259,8 +259,8 @@ const loop = () => {
     a-prob   = <span> ${STATE.active_prob} </span> <br>
     a-layers = <span> ${STATE.active_layers.join(" ")} </span> <br>
     a-item   = <span> ${STATE.active_item} </span> <br>
-    a-color  = <span> ${STATE.active_color} </span> <br> <br>
-    # layers = <span> ${STATE.num_layers.join(" ")} </span> <br>
+    a-color  = <span> ${STATE.active_color} </span> <br>
+    # layers = <span> ${STATE.num_layers.join(" ")} </span> <br> <br><br>
 
   LINKS <br> <br>
   `
