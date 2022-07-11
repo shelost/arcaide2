@@ -7,6 +7,7 @@ body {
     background: #1d0f54;
     //background: white;
     color: white;
+    touch-action: none;
 }
 
 input {
@@ -66,6 +67,9 @@ canvas{
     //background: white;
     //transition: 0.1s ease;
     background: rgba(white, 0.05);
+    &.linked{
+        border: 1px solid #aa6aff;
+    }
     &.active{
         border: 1px solid #00f7ff;
     }
@@ -603,6 +607,8 @@ canvas{
             background: rgba(black, 0.2);
             margin: 0.5vw;
             padding: 0.5vw;
+            padding-top: 0;
+            padding-bottom: 0;
             position: relative;
             border: 1px solid rgba(black, 0.3);
             border-radius: 0.7vw;
@@ -614,11 +620,12 @@ canvas{
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                width: 10.2vw;
-                padding: 0.2vw;
-                background: rgba(black, 0.1);
-                border-radius: 0.5vw;
-                margin: 0.2vw;
+                width: 10.8vw;
+                padding: 0.5vw;
+                padding-bottom: 0.3vw;
+               border-bottom: 1px solid rgba(white, 0.3);
+               // border-radius: 0.5vw;
+                margin: 0.3vw;
                 margin-bottom: 0.5vw;
                 .shelf{
                     display: flex;
@@ -631,12 +638,13 @@ canvas{
                         align-items: center;
                         .select{
                             width: 4.5vw;
-                            margin-top: 2px;
+                            margin-bottom: 2px;
                             padding: 2px;
                             background: none;
-                            color: white;
+                            color: rgba(white, 0.5);
+                            letter-spacing: 0.5px;
                             text-align: center;
-                            font-size: 11px;
+                            font-size: 10px;
                             transition: 0.2s ease;
                             border-radius: 10px;
                             cursor: pointer;
@@ -659,9 +667,11 @@ canvas{
                     .group_add{
                         width: 3vw;
                         height: 3vw;
+
                         line-height: 3vw;
                         border-radius: 0.4vw;
-                        margin: 0.8vw;
+                        margin: 0.9vw;
+                        margin-bottom: 2vw;
                         text-align: center;
                         background: rgba(#0074ff, 0.2);
                         font-size: 30px;
@@ -683,6 +693,7 @@ canvas{
                 width: 8vw;
                 border-radius: 0.4vw;
                 padding: 0.2vw;
+                font-weight: 500;
                 color: white;
                 letter-spacing: 0.5px;
             }

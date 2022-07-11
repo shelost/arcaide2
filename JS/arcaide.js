@@ -547,17 +547,19 @@ function setActive() {
   for (let i = 0; i < Class('item').length; i++){
     let div = Class('item')[i]
     deactivate(div)
+    div.classList.remove('linked')
   }
 
   activate(Id(`item-${STATE.active_item}`))
 
+  // linked item
   for (let i = 0; i < ACTIVE.links.length; i++) {
     let pair = ACTIVE.links[i]
     if (pair[0] == STATE.active_item) {
-      activate(Id(`item-${pair[1]}`))
+      Id(`item-${pair[1]}`).classList.add('linked')
     }
     if (pair[1] == STATE.active_item) {
-      activate(Id(`item-${pair[0]}`))
+      Id(`item-${pair[0]}`).classList.add('linked')
     }
   }
 }
@@ -598,10 +600,14 @@ function drawProblems() {
       if (i_id < 10) {
         i_id = '0' + i_id
       }
-      let ctx = Id(`${sym}${i_id}`).getContext("2d")
-      drawProblem(grid, ctx)
-      drawProblem(grid, Id(`thumbnail-${sym}${i_id}`).getContext("2d"))
-      drawBounds(grid, items, ctx)
+      let canvas = Id(`${sym}${i_id}`)
+      if (canvas) {
+        let ctx = canvas.getContext("2d")
+        drawProblem(grid, ctx)
+        drawProblem(grid, Id(`thumbnail-${sym}${i_id}`).getContext("2d"))
+        drawBounds(grid, items, ctx)
+      }
+
     }
   }
 
@@ -1255,6 +1261,8 @@ function addData() {
             bitmap: item.coords
           }
         }
+      }else{
+        select.innerHTML = `<option value="cheat" selected>cheat</option>`
       }
     }
   }

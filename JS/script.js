@@ -3,11 +3,12 @@
 
 let INDEX = 60
 let TIME = 0
-let SCALE = 1
+let W_SCALE = 1
+let H_SCALE = 1
 let RIGHT = 0
+let RATIO = 1
 
 let q = "1fad071e";
-let r = "150deff5";
 let big = "045e512c"
 let v = '1b2d62fb'
 
@@ -36,15 +37,31 @@ setInterval(() => {
 }, 10);
 
 function resizeArea() {
+  let ratio = window.innerWidth / window.innerHeight
+  if ((RATIO < 2) != (ratio < 2)) {
+    area.style.transform = ``
+    W_SCALE = 1
+    H_SCALE = 1
+  }
   let rect = area.getBoundingClientRect()
   let full_width = window.innerWidth - 180
-  let og_width = rect.width / SCALE
+  let og_width = rect.width / W_SCALE
+  let og_height = rect.height / H_SCALE
   let og_pos = rect.right - RIGHT
   RIGHT = window.innerWidth - 10 - og_pos
-  SCALE = full_width / og_width
-  area.style.transform = `scale(${SCALE}) translateX(${RIGHT}px)`
+  W_SCALE = full_width / og_width
+  H_SCALE = window.innerHeight / og_height
+  RATIO = ratio
+  if (ratio < 2) {
+    area.style.transform = `scale(${W_SCALE}) translateX(${RIGHT}px)`
+  } else if (ratio == 2) {
+    area.style.transform = ``
+    W_SCALE = 1
+    H_SCALE = 1
+  } else {
+    area.style.transform = `scale(${H_SCALE}) translateX(${0}px)`
+  }
 }
-
 
 //______________________________________  MENU  ______________________________________\\
 
@@ -235,6 +252,31 @@ const loop = () => {
     `;
 
 
+  let str =
+  `
+  STATE <br><br>
+
+    a-prob   = <span> ${STATE.active_prob} </span> <br>
+    a-layers = <span> ${STATE.active_layers.join(" ")} </span> <br>
+    a-item   = <span> ${STATE.active_item} </span> <br>
+    a-color  = <span> ${STATE.active_color} </span> <br> <br>
+    # layers = <span> ${STATE.num_layers.join(" ")} </span> <br>
+
+  LINKS <br> <br>
+  `
+
+  for (let i = 0; i < ACTIVE.links.length; i++){
+    let pair = ACTIVE.links[i]
+
+    str += `<span> ${pair[0]} , ${pair[1]} </span> <br>`
+  }
+  if (ACTIVE.links.length == 0) {
+    str += '(none)'
+  }
+
+  log.innerHTML = str
+
+
   //_______________________________  SELECT  _______________________________\\
 
   // menu
@@ -262,10 +304,12 @@ const loop = () => {
   }
   Id("unlink").onclick = () => {
     STATE.linking = false
+    let to_splice = []
     for (let i = 0; i < ACTIVE.links.length; i++) {
       let pair = ACTIVE.links[i]
       if (pair[0] == STATE.active_item || pair[1] == STATE.active_item) {
         ACTIVE.links.splice(i, 1)
+        i --
       }
     }
   }
@@ -333,6 +377,9 @@ const loop = () => {
       let no = group_div.firstElementChild.firstElementChild.firstElementChild.id.substring(9)
       STATE.active_item = y + '-' + no
       addData()
+      setParams()
+      drawItems()
+      console.log('draw')
     };
   }
 
@@ -544,11 +591,16 @@ const loop = () => {
     let n = JSON.parse(div.id.substring(5));
 
     div.onclick = () => {
+
       STATE.active_prob = n;
-      drawHTML()
+      STATE.active_item = 'i01-1'
+      STATE.active_layers = [1, 1]
+      STATE.num_layers = [OBJECT.input_dims[n-1].length, OBJECT.output_dims[n-1].length]
+
       setTimeout(() => {
+        drawHTML()
         drawItems()
-      }, 50);
+      }, 20);
     };
   }
 

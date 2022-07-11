@@ -147,3 +147,7 @@ function equalsGrid(first, second) {
   }
   return true
 }
+
+function r(n) {
+  return Math.round(n)
+}
