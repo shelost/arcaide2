@@ -43,10 +43,12 @@ let OBJECT = {
   inputs: [],
   input_items: [],
   input_dims: [],
+  input_results: [],
 
   outputs: [],
   output_items: [],
   output_dims: [],
+  output_results: [],
 
   names: [],
   links: [],
@@ -61,6 +63,7 @@ let ACTIVE = {
   input_items: [],
   input_dims: [],
   input_dim: [],
+  input_results: [],
   input_next: 0,
 
   output: [],
@@ -68,6 +71,7 @@ let ACTIVE = {
   output_items: [],
   output_dims: [],
   output_dim: [],
+  output_results: [],
   output_next: 0,
 
   item: [],
@@ -93,6 +97,7 @@ let STATE = {
 
 //______________________________________  SETUP  ______________________________________\\
 
+
 function loadJson(str) {
   window
     .fetch("data/" + str + ".json")
@@ -104,10 +109,12 @@ function loadJson(str) {
         inputs: [],
         input_items: [],
         input_dims: [],
+        input_results: [],
 
         outputs: [],
         output_items: [],
         output_dims: [],
+        output_results: [],
 
         names: [],
         links: [],
@@ -136,8 +143,10 @@ function loadJson(str) {
             }
           }]
         )
+        OBJECT.input_results.push([])
         ACTIVE.input_items = OBJECT.input_items[0]
         ACTIVE.input_dims = OBJECT.input_dims[0]
+        ACTIVE.input_results = OBJECT.input_results[0]
 
         OBJECT.outputs.push([copyGrid(OBJECT.problems[i].output)])
         OBJECT.output_dims.push([[0,0,0,0]])
@@ -158,8 +167,10 @@ function loadJson(str) {
             }
           }]
         )
+        OBJECT.output_results.push([])
         ACTIVE.output_items = OBJECT.output_items[0]
         ACTIVE.output_dims = OBJECT.output_dims[0]
+        ACTIVE.output_results = OBJECT.output_results[0]
 
         OBJECT.names.push([['i01', 'i-01'], ['o01', 'o-01']])
         OBJECT.links.push([])
@@ -222,12 +233,14 @@ function setParams() {
   ACTIVE.input_dims = OBJECT.input_dims[p]
   ACTIVE.input_layer = ACTIVE.input[STATE.active_layers[0] - 1]
   ACTIVE.input_dim = ACTIVE.input_dims[STATE.active_layers[0] - 1]
+  ACTIVE.input_results = OBJECT.input_results[p]
 
   ACTIVE.output = OBJECT.outputs[p]
   ACTIVE.output_items = OBJECT.output_items[p]
   ACTIVE.output_dims = OBJECT.output_dims[p]
   ACTIVE.output_layer = ACTIVE.output[STATE.active_layers[1] - 1]
   ACTIVE.output_dim = ACTIVE.output_dims[STATE.active_layers[0] - 1]
+  ACTIVE.output_results = OBJECT.output_results[p]
 
   let sym = STATE.active_item.substring(0, 1)
   let group = STATE.active_item.substring(1, 3)
@@ -322,6 +335,7 @@ function hover(xs, ys, c, ex, ey) {
 
 //______________________________________  HTML  ______________________________________\\
 
+
 // clear the html
 function clearHTML() {
   for (let i = 0; i < Class("layers").length; i++) {
@@ -363,7 +377,15 @@ function drawHTML() {
       if (j < 10) {
         x = sym + '0' + j
       }
-      let dims = input ? ACTIVE.input_dims[j-1] : ACTIVE.output_dims[j-1]
+      let dims = input ? ACTIVE.input_dims[j - 1] : ACTIVE.output_dims[j - 1]
+
+      if (dims == undefined) {
+        dims = [0,0,0,0]
+      }
+
+      if (dims[0] == undefined) {
+        location.reload()
+      }
 
       let box_str = `
         <div class = 'box'>
@@ -456,7 +478,6 @@ function drawHTML() {
               `
             for (let v = 0; v < items[k].length; v++){
               let item = items[k][v]
-             // console.log(item.data.type)
               items_str +=
                 `
                 <div class = 'elem'>
@@ -563,6 +584,7 @@ function setActive() {
     }
   }
 }
+
 
 //______________________________________  DRAW  ______________________________________\\
 
@@ -845,6 +867,7 @@ function drawItems() {
     let input = k == 0
     let items = input ? ACTIVE.input_items : ACTIVE.output_items
     let arr = input ? ACTIVE.input_layer : ACTIVE.output_layer
+
     for (let i = 0; i < items.length; i++){
       let item = items[i]
       let id = item.sym + item.group + '-' + item.n
@@ -853,8 +876,10 @@ function drawItems() {
       }
       let canv = Id(`item-${id}`)
       let ctx = canv.getContext('2d')
-      drawItem(arr, item.coords, ctx)
 
+      console.log(item)
+
+      drawItem(arr, item.coords, ctx)
     }
   }
 }
@@ -1267,3 +1292,155 @@ function addData() {
     }
   }
 }
+
+
+let ex =
+[
+  {
+    layer: 1,
+    sym: "i",
+    group: 1,
+    n: 1,
+    coords: [[6, 7], [7, 7], [8, 7], [8, 8], [9, 8], [10, 8], [10, 9], [10, 10], [10, 11]],
+    data: { "type": "", "len": -1, "xlen": -1, "ylen": -1, "xs": -1, "ys": -1 }
+  },
+  {
+    layer: 1,
+    sym: "i",
+    group: 1,
+    n: 2,
+    coords: [[12, 13], [13, 13], [14, 13], [15, 13], [15, 12], [16, 11], [16, 10], [16, 9], [16, 8]],
+    data: { "type": "cheat", "len": -1, "xlen": -1, "ylen": -1, "xs": -1, "ys": -1, "bitmap": [] }
+  },
+  {
+    layer: 1,
+    sym:"i",
+    group:2,
+    n:1,
+    coords: [[0,17],[0,16],[0,15],[0,14],[0,13],[0,12],[1,13],[1,14],[1,15],[2,15],[2,16],[2,17],[1,17],[1,16]],
+    data:{"type":"cheat","len":-1,"xlen":-1,"ylen":-1,"xs":-1,"ys":-1,"bitmap":[]}
+  },
+  {
+    layer: 1,
+    sym:"o",
+    group:3,
+    n:1,
+    coords: [[5,8],[5,7],[5,6],[5,5],[4,5],[4,6],[4,7],[3,8],[3,9],[3,10],[4,10],[4,11],[5,12],[6,12],[6,13],[7,13],[8,13]],
+    data:{"type":"cheat","len":-1,"xlen":-1,"ylen":-1,"xs":-1,"ys":-1,"bitmap":[]}
+  }
+  ]
+
+/*
+
+[
+  {
+    "layer": 1,
+    "sym": "i",
+    "group": 1,
+    "n": 1,
+    "coords": [[6, 7], [7, 7], [8, 7], [8, 8], [9, 8], [10, 8], [10, 9], [10, 10], [10, 11]],
+    "data": { "type": "", "len": -1, "xlen": -1, "ylen": -1, "xs": -1, "ys": -1 }
+  },
+  {
+    "layer": 1,
+    "sym": "i",
+    "group": 1,
+    "n": 2,
+    "coords": [[12, 13], [13, 13], [14, 13], [15, 13], [15, 12], [16, 11], [16, 10], [16, 9], [16, 8]],
+    "data": { "type": "cheat", "len": -1, "xlen": -1, "ylen": -1, "xs": -1, "ys": -1, "bitmap": [] }
+  },
+  {
+    "layer": 1,
+    "sym":"i",
+    "group":2,
+    "n":1,
+    "coords": [[0,17],[0,16],[0,15],[0,14],[0,13],[0,12],[1,13],[1,14],[1,15],[2,15],[2,16],[2,17],[1,17],[1,16]],
+    "data":{"type":"cheat","len":-1,"xlen":-1,"ylen":-1,"xs":-1,"ys":-1,"bitmap":[]}
+  },
+  {
+    "layer": 1,
+    "sym":"o",
+    "group":3,
+    "n":1,
+    "coords": [[5,8],[5,7],[5,6],[5,5],[4,5],[4,6],[4,7],[3,8],[3,9],[3,10],[4,10],[4,11],[5,12],[6,12],[6,13],[7,13],[8,13]],
+    "data":{"type":"cheat","len":-1,"xlen":-1,"ylen":-1,"xs":-1,"ys":-1,"bitmap":[]}
+  }
+]
+*/
+
+// add data
+function setItems(list, sym) {
+
+  let l = []
+  let str = ''
+  for (let i = 0; i < list.length; i++){
+    let sol = list[i]
+
+    if (sol[0].data == undefined) {
+      sol = objectify(sol, sym)
+    }
+
+    l.push(sol)
+    str +=
+      `
+      <div id = 'res-${sym}-${i}' class = 'res res-${sym}'> ${i} </div>
+      `
+    //OBJECT.output_items[STATE.active_prob - 1] = sol
+  }
+  Id(`results-${sym}`).innerHTML = str
+  if (sym == 'i') {
+    OBJECT.input_results[STATE.active_prob-1] = l
+  } else {
+    OBJECT.output_results[STATE.active_prob-1] = l
+  }
+
+}
+
+
+//
+function objectify(data, sym) {
+
+  let list = []
+
+  for (let k = 0; k < data.length; k++){
+    let d = data[k]
+    let c = []
+    let layer = sym == "i" ? ACTIVE.input_layer : ACTIVE.output_layer
+    let ys = layer.length-1-d.ys
+    switch (d.type) {
+      case "diagonal_ul":
+        for (let i = 0; i < d.len; i++){
+          c.push([ys-i, d.xs-i])
+        }
+        break
+      case "diagonal_ur":
+        for (let i = 0; i < d.len; i++){
+          c.push([ys-i, d.xs+i])
+        }
+        break
+      case "cheat":
+        for (let i = 0; i < d.xlen; i++){
+          for (let j = 0; j < d.ylen; j++){
+            c.push([ys - j, d.xs + i])
+          }
+        }
+        break
+      default:
+        break
+    }
+    let res = {
+      layer: 1,
+      sym: sym,
+      group: k+1,
+      n: 1,
+      coords: c,
+      data: d
+    }
+    list.push(res)
+  }
+
+
+  return list
+}
+
+

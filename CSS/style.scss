@@ -27,8 +27,8 @@ select {
 }
 
 ::selection{
-    background: black;
-    color: white;
+    background: #ffce00;
+    color: black;
 }
 
 
@@ -60,7 +60,7 @@ button {
 }
 
 ::-webkit-scrollbar-thumb{
-    background: rgba(black, 0.5);
+    background: rgba(white, 0.5);
 }
 
 canvas{
@@ -223,15 +223,15 @@ canvas{
 
     #navbar{
         position: fixed;
-        top: 15px;
-        left: 15px;
-        width: 165px;
-        height: calc(100vh - 30px);
+        top: 0px;
+        left: 0px;
+        width: 170px;
+        height: 100vh;
         background: #ccf5e7;
         background: #1d0f54;
         //background: rgba(white, 0.7);
         //border: 1px solid black;
-        border-radius: 15px;
+        //border-radius: 15px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -240,11 +240,11 @@ canvas{
 
         #mast{
             background: rgba(white, 0.1);
-            width: 140px;
+            width: 150px;
             height: 40px;
-            margin: 10px;
+            //margin: 10px;
             margin-top: 13px;
-            border-radius: 10px;
+            border-radius: 5px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -264,16 +264,30 @@ canvas{
             }
         }
 
+        #log{
+            flex: 1;
+            font-size: 11px;
+            width: 150px;
+            border-radius: 10px;
+            padding: 1vw;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin: 0;
+            overflow-y: scroll;
+            span{
+                font-weight: 900;
+            }
+        }
+
         #id{
             font-size: 14px;
-            width: 140px;
+            width: 150px;
             height: 35px;
             background: rgba(black, 1);
-            border-radius: 10px;
+            border-radius: 5px;
             text-align: center;
             line-height: 33px;
             margin: 10px;
-            margin-bottom: 15px;
             font-weight: 300;
             letter-spacing: 1px;
             color: #ffce00;
@@ -283,27 +297,13 @@ canvas{
             }
         }
 
-        #log{
-            font-size: 11px;
-            flex: 1;
-            width: 150px;
-            border-radius: 10px;
-            padding: 1vw;
-            font-weight: 300;
-            letter-spacing: 1px;
-            margin: 0;
-            span{
-                font-weight: 900;
-            }
-        }
-
         #menu{
             position: absolute;
             background: rgba(black, 1);
             backdrop-filter: blur(5px);
             bottom: 45px;
-            left: 13px;
-            width: 140px;
+            left: 10px;
+            width: 150px;
             border-radius: 10px 10px 0 0;
             overflow-y: scroll;
             transition: 0.2s ease;
@@ -335,6 +335,121 @@ canvas{
             }
         }
     }
+
+    .b{
+        position: relative;
+    }
+
+    .results{
+        height: 3vw;
+        border-radius: 10px;
+        width: 33vw;
+        margin-top: 1vw;
+        padding-left: 0.3vw;
+        background: black;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        .res{
+            width: 2vw;
+            height: 2vw;
+            background: rgba(white, 0.2);
+            text-align: center;
+            line-height: 2vw;
+            margin: 0.3vw;
+            font-size: 14px;
+            border-radius: .3vw;
+            transition: 0.2s ease;
+            cursor: pointer;
+            &:hover{
+                background: rgba(white, 0.3);
+            }
+        }
+    }
+
+    .it{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 4vw;
+        height: 3vw;
+        background: #404040;
+        border-radius: 10px;
+        z-index: 3;
+        overflow-y: hidden;
+        box-shadow: 0 10px 20px 5px rgba(black, 0.4);
+        transition: 0.2s ease;
+        overflow: hidden;
+        .header{
+           // position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 4vw;
+            transition: 0.2s ease;
+            background: #404040;
+            cursor: move;
+            h1{
+                width: 4vw;
+                text-align: center;
+                font-size: 12px;
+                line-height: 2vw;
+                letter-spacing: 0.5px;
+                font-weight: 300;
+                margin: 0;
+                margin-bottom: 1vw;
+                padding: 0;
+                transition: 0.2s ease;
+            }
+
+
+            &:hover{
+                background: rgba(white, 0.1);
+            }
+        }
+        textarea{
+            font-family: 'Source Code Pro', Manrope, sans-serif;
+            width: 100%;
+            height: 320px;
+            padding: 15px;
+            margin: auto;
+            background: black;
+            overflow-y: scroll;
+            resize: none;
+            color: white;
+            outline: none;
+            border: none;
+            font-size: 12px;
+            font-weight: 200;
+            letter-spacing: 0.5px;
+        }
+
+        button{
+            background: #0074ff;
+            height: 40px;
+            width: 100%;
+            margin: 0;
+            transform: translateY(-5px);
+            border-radius: 0;
+            &:hover{
+                background: #0048ff;
+            }
+        }
+
+        &.active{
+            width: 37vw;
+            height: 400px;
+            .header{
+                height: 40px;
+                h1{
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+
 
     #main{
         position: fixed;
@@ -585,8 +700,6 @@ canvas{
             }
         }
 
-
-
         @keyframes pending {
             0% {
                 border: 2px solid #a0cbff;
@@ -794,6 +907,65 @@ canvas{
 }
 
 
+@media screen and (max-width: 800px){
+
+    body{
+        width: 80vw;
+        height: 80vh;
+        overflow: hidden;
+    }
+
+    #navbar{
+        display: none;
+    }
+
+    #main{
+        display: none;
+    }
+
+    img{
+        width: 40px;
+    }
+
+    #splash{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 5;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: black;
+        text-align: center;
+
+        h1{
+            font-weight: 900;
+            font-size: 28px;
+            letter-spacing: 1px;
+            margin: 0;
+            span{
+                font-weight: 200;
+            }
+        }
+
+        h4{
+            font-weight: 200;
+            letter-spacing: 1px;
+            margin-bottom: 50px;
+        }
+
+        #footer{
+            display: none;
+        }
+
+        #start{
+            display: none;
+        }
+    }
+}
 
 
 
@@ -908,6 +1080,7 @@ canvas{
         color: black;
     }
 }
+
 
 
 
