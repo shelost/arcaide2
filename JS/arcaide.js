@@ -1425,6 +1425,41 @@ function objectify(data, sym) {
           }
         }
         break
+      case "rect":
+        for (let i = 0; i < d.xlen; i++){
+          for (let j = 0; j < d.ylen; j++){
+            c.push([ys - j, d.xs + i])
+          }
+        }
+        break
+      case "outline":
+        for (let i = 0; i < d.xlen; i++){
+          for (let j = 0; j < d.ylen; j++){
+            if (i == 0 || i == d.xlen - 1
+                || j == 0 || j == d.ylen - 1) {
+                c.push([ys - j, d.xs + i])
+            }
+          }
+        }
+        break
+      case "horizontal":
+        for (let i = 0; i < d.len; i++){
+          c.push([ys, d.xs + i])
+        }
+        break
+      case "parallel":
+        for (let i = 0; i < d.len; i++){
+          c.push([ys, d.xs + i])
+        }
+        break
+      case "vertical":
+        for (let i = 0; i < d.len; i++){
+          c.push([ys-i, d.xs])
+        }
+        break
+      case "dot":
+        c.push([ys, d.xs])
+        break
       default:
         break
     }
