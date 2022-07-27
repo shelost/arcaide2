@@ -1425,7 +1425,7 @@ function objectify(data, sym) {
           }
         }
         break
-      case "rect":
+      case "rectangle":
         for (let i = 0; i < d.xlen; i++){
           for (let j = 0; j < d.ylen; j++){
             c.push([ys - j, d.xs + i])
