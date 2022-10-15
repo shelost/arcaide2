@@ -1,3 +1,9 @@
+/*
+
+This is the file that contains all of the functions & constants for Arcaide.
+
+*/
+
 
 //______________________________________  CONSTANTS  ______________________________________\\
 
