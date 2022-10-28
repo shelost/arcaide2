@@ -210,6 +210,7 @@ const loop = () => {
 
   // log
 
+  /*
   log.innerHTML =
    `
     STATE <br><br>
@@ -233,6 +234,7 @@ const loop = () => {
     coloring = <span> ${STATE.coloring} </span> <br>
     color= <span> ${STATE.color} </span> <br>
     `;
+  */
 
 
   //_______________________________  SELECT  _______________________________\\

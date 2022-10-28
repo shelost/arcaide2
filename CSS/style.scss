@@ -5,6 +5,8 @@ body {
     background: #f5f2ff;
     background: black;
     background: #1d0f54;
+    background: #130c2e;
+    background: black;
     //background: white;
     color: white;
 }
@@ -209,15 +211,15 @@ canvas{
 
     #navbar{
         position: fixed;
-        top: 15px;
-        left: 15px;
+        top: 30px;
+        left: 0px;
         width: 165px;
-        height: calc(100vh - 30px);
+        height: calc(100vh - 60px);
         background: #ccf5e7;
-        background: #1d0f54;
-        //background: rgba(white, 0.7);
+        background: #2b2165;
+        //background: rgba(white, 0.05);
         //border: 1px solid black;
-        border-radius: 15px;
+        border-radius: 0 15px 15px 0;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -226,11 +228,12 @@ canvas{
 
         #mast{
             background: rgba(white, 0.1);
+            //background: red;
             width: 140px;
             height: 40px;
             margin: 10px;
             margin-top: 13px;
-            border-radius: 10px;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -242,7 +245,7 @@ canvas{
                 font-size: 16px;
                 font-weight: 900;
                 margin: 0;
-                letter-spacing: 0.5px;
+                letter-spacing: 0.3px;
                 //color: black;
                 span{
                     font-weight: 100;
@@ -270,6 +273,9 @@ canvas{
         }
 
         #log{
+
+            /*
+            DATA version:
             font-size: 11px;
             flex: 1;
             width: 150px;
@@ -277,6 +283,19 @@ canvas{
             padding: 1vw;
             font-weight: 300;
             letter-spacing: 1px;
+            margin: 0;
+            span{
+                font-weight: 900;
+            }
+            */
+
+            font-size: 11px;
+            flex: 1;
+            width: 150px;
+            border-radius: 10px;
+            padding: 1vw;
+            font-weight: 100;
+            letter-spacing: 0.5px;
             margin: 0;
             span{
                 font-weight: 900;
@@ -440,8 +459,10 @@ canvas{
         display: none;
         //padding: 0.5vw;
         border-radius: 1vw;
-        border: 1px solid rgba(white, 0.2);
+       // border: 1px solid rgba(white, 0.2);
         background: rgba(white, 0.02);
+        background: #212026;
+        background: #201f25;
         padding: 0.5vw;
 
         &.active{
@@ -477,6 +498,8 @@ canvas{
                 }
             }
             .exp{
+                background: rgba(black, 0.2);
+                border-radius: 10px;
                 .exp-btn{
                     text-align: center;
                     height: 1.5vw;
@@ -489,14 +512,14 @@ canvas{
 
                     &.plu{
                         color: #00b3ff;
-                        background: rgba(#0074ff, 0.1);
+                        //background: rgba(#0074ff, 0.1);
                         &:hover{
                             background: rgba(#0074ff, 0.3);
                         }
                     }
                     &.min{
                         color: #ff4946;
-                        background: rgba(red, 0.15);
+                        //background: rgba(red, 0.15);
                         &:hover{
                             background: rgba(red, 0.3);
                         }
@@ -506,7 +529,7 @@ canvas{
                     }
                 }
                 p{
-                    font-size: 14px;
+                    font-size: 12px;
                     width: 1vw;
                     margin: 0;
                     text-align: center;
@@ -590,11 +613,11 @@ canvas{
             height: 28vw;
             overflow-y: scroll;
             overflow-x: hidden;
-            background: rgba(black, 0.2);
+            background: rgba(black, 0.1);
             margin: 0.5vw;
             padding: 0.5vw;
             position: relative;
-            border: 1px solid rgba(black, 0.3);
+            //border: 1px solid rgba(black, 0.3);
             border-radius: 0.7vw;
             display: flex;
             flex-direction: column;
@@ -606,10 +629,12 @@ canvas{
                 align-items: center;
                 width: 10.2vw;
                 padding: 0.2vw;
-                background: rgba(black, 0.1);
+                padding-top: 0.6vw;
+                background: rgba(black, 0.2);
                 border-radius: 0.5vw;
                 margin: 0.2vw;
                 margin-bottom: 0.5vw;
+                //box-shadow: 0px 4px 30px rgba(black, 0.2);
                 .shelf{
                     //border: 1px solid blue;
                     display: flex;
@@ -617,9 +642,9 @@ canvas{
                     align-items: center;
                     flex-wrap: wrap;
                     .item{
-                        width: 4.5vw;
-                        height: 4.5vw;
-                        border-radius: 0.4vw;
+                        width: 4vw;
+                        height: 4vw;
+                        border-radius: 0.3vw;
                         margin: 0.2vw;
                         background: rgba(white, 0.1);
                         cursor: pointer;
@@ -634,7 +659,7 @@ canvas{
                         border-radius: 0.4vw;
                         margin: 0.8vw;
                         text-align: center;
-                        background: rgba(#0074ff, 0.2);
+                        background: rgba(#0074ff, 0.1);
                         font-size: 30px;
                         font-weight: 200;
                         color: #00b7ff;
@@ -672,29 +697,32 @@ canvas{
         }
     }
 
-    .square{
-        width: 7vw;
-        height: 7vw;
-        margin: 0.5vw;
-        margin: 0;
-        border-radius: 0.5vw;
-    }
+
 
     .previews{
         margin-bottom: 2vw;
+        background: #1f174c;
         //border-bottom: 1px solid white;
-    }
 
-    .preview{
-        width: 6vw;
-        height: 6vw;
-        margin: 0;
-        margin-left: 1vw;
-        margin-right: 1vw;
-        border-radius: 0.5vw;
-        border: 1px solid #00ff77;
-        &.incorrect{
-            border: 1px solid #ff4040;
+        .square{
+            width: 6vw;
+            height: 6vw;
+            margin: 0.5vw;
+            margin: 0;
+            border-radius: 0.5vw;
+        }
+
+        .preview{
+            width: 4.5vw;
+            height: 4.5vw;
+            margin: 0;
+            margin-left: 1vw;
+            margin-right: 1vw;
+            border-radius: 0.5vw;
+            border: 1px solid #00ff77;
+            &.incorrect{
+                border: 1px solid #ff4040;
+            }
         }
     }
 
