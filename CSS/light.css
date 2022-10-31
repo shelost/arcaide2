@@ -1,0 +1,172 @@
+.light {
+  background: white;
+}
+
+.light button {
+  background: #0074ff;
+}
+
+.light button:hover {
+  background: #0015ff;
+}
+
+.light button.del {
+  background: #ff0000;
+}
+
+.light button.del:hover {
+  background: #d31111;
+}
+
+.light #navbar {
+  background: #dbf2ff;
+  color: black;
+}
+
+.light #navbar #mast {
+  color: black;
+}
+
+.light #navbar #id {
+  color: black;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.light canvas {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.light canvas.active {
+  border: 2px solid red;
+}
+
+.light #row .prob.active {
+  background: rgba(255, 0, 0, 0.3);
+}
+
+.light #row .prob.active .canv {
+  border: 2px solid red;
+}
+
+.light .links #link {
+  color: #0074ff;
+}
+
+.light .ac {
+  color: red;
+  border: 1px solid red;
+  font-weight: 700;
+  background: white;
+}
+
+.light .ac:hover {
+  background: rgba(255, 0, 0, 0.1);
+}
+
+.light .layer {
+  -webkit-box-shadow: 0 30px 40px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 30px 40px rgba(0, 0, 0, 0.05);
+}
+
+.light .layer .box .panorama .flex canvas {
+  -webkit-box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.light .layer .box .title {
+  color: black;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.light .layer .box .exp {
+  background: rgba(0, 0, 0, 0.05);
+  color: black;
+}
+
+.light .layer .box .exp .exp-btn {
+  font-weight: 700;
+  background: none;
+}
+
+.light .layer .box .exp .exp-btn.plu {
+  color: #0074ff;
+}
+
+.light .layer .box .exp .exp-btn.min {
+  color: red;
+}
+
+.light .layer .items {
+  background-color: white;
+}
+
+.light .layer .items .group {
+  background: #dbf2ff;
+}
+
+.light .layer .items .group .shelf .elem canvas {
+  background: white;
+}
+
+.light .layer .items .group .shelf .elem select {
+  color: black;
+}
+
+.light .layer .items .group .shelf .group_add {
+  background: rgba(0, 116, 255, 0);
+  color: #0074ff;
+  border: 1px solid #0074ff;
+}
+
+.light .layer .items .group .shelf .group_add:hover {
+  background: rgba(0, 116, 255, 0.1);
+}
+
+.light .layer .items .group .label {
+  color: black;
+}
+
+.light .layer .toolbar {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.light .b .it {
+  -webkit-box-shadow: 0 0px 40px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 0px 40px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid white;
+}
+
+.light .b .it .header {
+  background: none;
+  color: black;
+  border: none;
+}
+
+.light .b .it .header:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.light .b .it textarea {
+  background: none;
+  color: black;
+  font-weight: 400;
+}
+
+.light .b .results {
+  background: #dbf2ff;
+}
+
+.light .b .results .res {
+  background: rgba(0, 116, 255, 0.1);
+  color: #0074ff;
+  font-weight: 700;
+}
+
+.light .b .results .res:hover {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+  background: rgba(0, 116, 255, 0.2);
+}
+/*# sourceMappingURL=light.css.map */

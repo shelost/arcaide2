@@ -100,11 +100,11 @@ function drawResults(query) {
   for (let i = 0; i < sorted.length; i++) {
     let name = sorted[i][0];
     let index = sorted[i][1]
-    s = `<p class = 'result' id = '${name}-${index}'> <span> ${index}</span> ${name} </p>` + s;
+    s = s+`<p class = 'result' id = '${name}-${index}'> <span> ${index}</span> ${name} </p>`;
   }
 
   pane.innerHTML = s
-  pane.scrollTo(0, pane.scrollHeight)
+ // pane.scrollTo(0, pane.scrollHeight)
 }
 
 drawResults('')
@@ -123,6 +123,11 @@ id.oninput = () => {
 
 
 
+
+Id('edit-o').onclick = () => {
+  Id('it-o').classList.toggle('active')
+}
+
 Id('header-o').onclick = () => {
   Id('it-o').classList.toggle('active')
 }
@@ -138,6 +143,10 @@ Id('apply-o').onclick = () => {
   }
 }
 
+
+Id('edit-i').onclick = () => {
+  Id('it-i').classList.toggle('active')
+}
 
 Id('header-i').onclick = () => {
   Id('it-i').classList.toggle('active')

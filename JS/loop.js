@@ -11,6 +11,7 @@ const loop = () => {
 
     // log
 
+  /*
     log.innerHTML =
      `
       STATE <br><br>
@@ -35,6 +36,7 @@ const loop = () => {
       color= <span> ${STATE.color} </span> <br>
       `;
 
+      */
 
     let str =
     `
@@ -58,7 +60,6 @@ const loop = () => {
       str += '(none)'
     }
 
-    log.innerHTML = str
 
 
     //_______________________________  SELECT  _______________________________\\
@@ -293,9 +294,10 @@ const loop = () => {
         layer = layer.substring(1)
       }
       layer = JSON.parse(layer)
-      let arr = sym == "i" ? ACTIVE.input_items : ACTIVE.output_items;
-      let next = sym == "i" ? ACTIVE.input_next : ACTIVE.output_next
-      let n = sym == "i" ? 0 : 1;
+      let arr = sym == "i" ? ACTIVE.input_items : ACTIVE.output_items,
+          next = sym == "i" ? ACTIVE.input_next : ACTIVE.output_next,
+          n = sym == "i" ? 0 : 1,
+          word = sym == 'i' ? 'Input' : 'Output'
       div.onclick = () => {
         arr.push({
           layer: layer,
@@ -313,13 +315,12 @@ const loop = () => {
             bitmap: []
           }
         });
-        let group = next
-        let key = sym + group
-        let name = sym + '-' + group
-        let id = sym + group + '-' + 1
+        let group = next,
+            key = sym + group,
+            name = word + ' Object #'+ group,
+            id = sym + group + '-' + 1
         if (group < 10) {
           key = sym + '0' + group
-          name = sym + '-0' + group
           id = sym + '0' + group + '-' + 1
         }
         ACTIVE.names.push([key, name])
@@ -470,11 +471,11 @@ const loop = () => {
       let prob = OBJECT.problems[STATE.active_prob - 1]
       let og_grid = input ? prob.input : prob.output
       let n = input ? 0 : 1;
-      let arr = input ? ACTIVE.input : ACTIVE.output;
-      let grid = input ? ACTIVE.input_layer : ACTIVE.output_layer;
-      let items = input ? ACTIVE.input_items : ACTIVE.output_items;
-      let dims = input ? ACTIVE.input_dims : ACTIVE.output_dims;
-      let next = input ? ACTIVE.input_next : ACTIVE.output_next
+      let arr = input ? ACTIVE.input : ACTIVE.output,
+          items = input ? ACTIVE.input_items : ACTIVE.output_items,
+          dims = input ? ACTIVE.input_dims : ACTIVE.output_dims,
+          next = input ? ACTIVE.input_next : ACTIVE.output_next,
+          word = input ? 'Input' : 'Output'
       div.onclick = () => {
         if (STATE.num_layers[n] < 6) {
           arr.push(emptyGrid(og_grid))
@@ -501,7 +502,7 @@ const loop = () => {
             group = '0' + group
           }
           let key = sym + group
-          let name = sym + '-' + group
+          let name = word + ' Object #'+ group
           ACTIVE.names.push([key,name])
           STATE.active_layers[n] = STATE.num_layers[n]
           STATE.active_item = sym + group + '-' + 1

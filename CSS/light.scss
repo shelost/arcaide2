@@ -1,0 +1,169 @@
+// LIGHT MODE
+
+$highlight: #dbf2ff;
+
+.light{
+    background: white;
+
+    button{
+        background: #0074ff;
+        &:hover{
+            background: #0015ff;
+        }
+        &.del{
+            background: #ff0000;
+            &:hover{
+                background: #d31111;
+            }
+        }
+    }
+    #navbar{
+        background: $highlight;
+        color: black;
+        #mast{
+            color: black;
+            //background: #f3f9ff;
+        }
+        #id{
+            color: black;
+            font-weight: 600;
+            background: rgba(white, 0.5);
+        }
+    }
+    canvas{
+        background: rgba(white, 0.4);
+        &.active{
+            border: 2px solid red;
+        }
+    }
+    #row{
+        .prob{
+            &.active{
+                background: rgba(red, 0.3);
+                .canv{
+                    border: 2px solid red;
+                }
+            }
+        }
+    }
+    .links{
+        .link-btn{
+
+        }
+        #link{
+            color: #0074ff;
+        }
+    }
+    .ac{
+        color: red;
+        border: 1px solid red;
+        font-weight: 700;
+        background: white;
+        &:hover{
+            background: rgba(red, 0.1);
+        }
+    }
+    .layer{
+        box-shadow: 0 30px 40px rgba(black, 0.05);
+        .box{
+            .panorama{
+                .flex{
+                    canvas{
+                        box-shadow: 0 10px 30px rgba(black, 0.1);
+                    }
+                }
+            }
+
+            .title{
+                color: black;
+                background: rgba(black, 0.08);
+            }
+            .exp{
+                background: rgba(black, 0.05);
+                .exp-btn{
+                    //color: black;
+                    font-weight: 700;
+                    background: none;
+                    &.plu{
+                        //background: rgba(#0074ff, 0.2);
+                        color: #0074ff;
+                    }
+                    &.min{
+                        color: red;
+                    }
+                }
+                color: black;
+            }
+        }
+        .items{
+            background-color: white;
+            .group{
+                background: $highlight;
+                .shelf{
+                    .elem{
+                        canvas{
+                            background: white;
+                        }
+                        select{
+                            color: black;
+                        }
+                    }
+
+                    .group_add{
+                        background: rgba(#0074ff, 0);
+                        color: #0074ff;
+                        border: 1px solid #0074ff;
+                        &:hover{
+                            background: rgba(#0074ff, 0.1);
+                        }
+                    }
+                }
+                .label{
+                    color: black;
+                }
+            }
+            .item{
+            }
+        }
+
+        .toolbar{
+            background: rgba(black, 0.05);
+        }
+
+
+    }
+
+    .b{
+        .it{
+            box-shadow: 0 0px 40px rgba(black, 0.1);
+            background: rgba(white, .95);
+            border: 1px solid white;
+            .header{
+                background: none;
+                color: black;
+                border: none;
+                &:hover{
+                    background: rgba(black, 0.05);
+                }
+            }
+            textarea{
+                background: none;
+                color: black;
+                font-weight: 400;
+            }
+        }
+        .results{
+            background: $highlight;
+            //box-shadow: 0 30px 40px rgba(black, 0.08);
+            .res{
+                background: rgba(#0074ff, 0.1);
+                color: #0074ff;
+                font-weight: 700;
+                &:hover{
+                    transform: scale(1.2);
+                    background: rgba(#0074ff, 0.2);
+                }
+            }
+        }
+    }
+}

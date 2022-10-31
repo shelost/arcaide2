@@ -17,6 +17,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="assets/cube-16.png" />
     <link href='CSS/effects.css' rel='stylesheet'>
     <link href='CSS/style.css' rel='stylesheet'>
+    <link href='CSS/light.css' rel='stylesheet'>
     <link href='CSS/mobile.css' rel='stylesheet'>
 
 </head>
@@ -28,9 +29,31 @@
             <img src = './assets/cube.png' alt = 'cube'>
             <h1> ARC<span>AIDE</span>2 </h1>
         </div>
-        <p id='log' value='...' disabled> </p>
+        <div id='log'>
+
+            <h3> What is this? </h3>
+
+            <p>
+                Object annotation tool for the Abstraction & Reasoning Corpus (ARC).
+            </p>
+
+            <h3> Pro Tip </h3>
+
+            <p>
+                Reloading the page solves 90% of issues.
+            </p>
+
+            <h3> Contact </h3>
+
+            <p>
+                Please report any errors and/or send me new feature requests at <span>shelost.off@gmail.com</span>.
+            </p>
+        </div>
+
+        <img id = 'lab' src = './assets/rll.png' alt = 'lab logo'>
 
         <input id='id' value = '######'>
+
         <div id = 'menu'>
         </div>
     </div>
@@ -53,6 +76,14 @@
             <div class='row'>
                 <div class='col right'>
                     <div class = 'flex previews'>
+                        <div id = 'light-i' class = 'light'>
+                            <h3 class = 'correct light-type'>
+                                <span class="material-symbols-outlined">done</span> Match
+                            </h3>
+                            <h3 class = 'incorrect light-type'>
+                                <span class="material-symbols-outlined">close</span> No Match
+                            </h3>
+                        </div>
                         <canvas id='preview-i' class='preview' width='300' height='300'></canvas>
                         <canvas id='i' class='square' width='300' height='300'></canvas>
                     </div>
@@ -60,15 +91,24 @@
                         <div id='thumbnails-i' class='thumbnails'>
                         </div>
                         <div class = 'b'>
+
                             <div class='layers'></div>
-                            <div id = 'results-i' class='results'></div>
+
+                            <div class = 'json'>
+                                <div id = 'results-i' class='results'></div>
+                                <button id = 'edit-i' class='edit'> JSON </button>
+                            </div>
+
                             <div id = 'it-i' class = 'it'>
                                 <div id = 'header-i' class = 'header'>
-                                    <h1> json </h1>
+                                    <h1> JSON </h1>
+                                    <span class="material-symbols-outlined">close</span>
                                 </div>
                                 <textarea id='data-i' class = 'data' placeholder='Enter items...'></textarea>
                                 <button id='apply-i' class = 'apply'>Apply</button>
+                                <div class = 'bar'></div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -80,18 +120,35 @@
                     <div class = 'flex previews'>
                         <canvas id='o' class='square' width='300' height='300'></canvas>
                         <canvas id='preview-o' class='preview' width='300' height='300'></canvas>
+                        <div id = 'light-o' class = 'light'>
+                            <h3 class = 'correct light-type'>
+                                <span class="material-symbols-outlined">done</span> Match
+                            </h3>
+                            <h3 class = 'incorrect light-type'>
+                                <span class="material-symbols-outlined">close</span> No Match
+                            </h3>
+                        </div>
                     </div>
                     <div class='row'>
                         <div class = 'b'>
+
                             <div class='layers'></div>
-                            <div id = 'results-o' class='results'></div>
+
+                            <div class = 'json'>
+                                <div id = 'results-o' class='results'></div>
+                                <button id = 'edit-o' class='edit'> JSON </button>
+                            </div>
+
                             <div id = 'it-o' class = 'it'>
                                 <div id = 'header-o' class = 'header'>
-                                    <h1> json </h1>
+                                    <h1> JSON </h1>
+                                    <span class="material-symbols-outlined">close</span>
                                 </div>
                                 <textarea id='data-o' class = 'data' placeholder='Enter items...'></textarea>
                                 <button id='apply-o' class = 'apply'>Apply</button>
+                                <div class = 'bar'></div>
                             </div>
+
                         </div>
                         <div id='thumbnails-o' class='thumbnails'>
                         </div>

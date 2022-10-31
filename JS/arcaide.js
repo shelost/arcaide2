@@ -178,7 +178,7 @@ function loadJson(str) {
         ACTIVE.output_dims = OBJECT.output_dims[0]
         ACTIVE.output_results = OBJECT.output_results[0]
 
-        OBJECT.names.push([['i01', 'i-01'], ['o01', 'o-01']])
+        OBJECT.names.push([['i01', 'Input Object #1'], ['o01', 'Output Object #1']])
         OBJECT.links.push([])
         ACTIVE.names = OBJECT.names[0]
         ACTIVE.links = OBJECT.links[0]
@@ -493,11 +493,12 @@ function drawHTML() {
                 </div>
                 `
             }
+            let word = temp.sym == 'i'? 'Input' : 'Output'
             items_str +=
               `
                     <div id = 'group_add_${y}_${j}' class = 'group_add'> + </div>
                   </div>
-                <input id = 'label-${y}' class = 'label' value = '${name}'>
+                <input id = 'label-${y}' class = 'label' placeholder = 'Object Name...' value = '${name}'>
               </div>
               `
           }
@@ -507,8 +508,12 @@ function drawHTML() {
         `
         </div>
         <div class = 'buttons'>
-          <button id = 'add-item-${x}' class = 'add add-item item-btn'> Add </button>
-          <button id = 'del-item-${x}' class = 'del del-item item-btn'> Del </button>
+          <button id = 'add-item-${x}' class = 'add add-item item-btn'>
+            <span class="material material-symbols-outlined">add</span> Add
+          </button>
+          <button id = 'del-item-${x}' class = 'del del-item item-btn'>
+            <span class="material material-symbols-outlined">delete</span> Del
+          </button>
           <button id = 'clear-${x}' class = 'clear ac item-btn'> AC </button>
         </div>
         </div>
@@ -526,8 +531,12 @@ function drawHTML() {
     }
     Class("thumbnails")[i - 1].innerHTML += `
        <div class = 'buttons'>
-          <button id = 'add-layer-${sym}' class = 'add add-layer layer-btn'> + </button>
-          <button id = 'del-layer-${sym}' class = 'del del-layer layer-btn'> - </button>
+          <button id = 'add-layer-${sym}' class = 'add add-layer layer-btn'>
+            <span class="material material-symbols-outlined">add</span>
+          </button>
+          <button id = 'del-layer-${sym}' class = 'del del-layer layer-btn'>
+            <span class="material material-symbols-outlined">remove</span>
+          </button>
         </div>
       `
   }
@@ -666,12 +675,13 @@ function drawProblems() {
     }
 
     let canv = Id(`preview-${sym}`)
+    let light = Id(`light-${sym}`)
     let ctx = canv.getContext('2d')
 
     if (!equalsGrid(stacked, grid)) {
-      canv.classList.add('incorrect')
+      light.classList.add('incorrect')
     } else {
-      canv.classList.remove('incorrect')
+      light.classList.remove('incorrect')
     }
 
     drawProblem(stacked, ctx, 0.5)
@@ -1381,6 +1391,8 @@ function setItems(list, sym) {
   let str = ''
   for (let i = 0; i < list.length; i++){
     let sol = list[i]
+
+    console.log(sol)
 
     if (sol[0].data == undefined) {
       sol = objectify(sol, sym)
